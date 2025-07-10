@@ -231,3 +231,283 @@ class AuraEsolang:
             return datetime.now().minute
         elif tokens[0] == 'second':
             return datetime.now().second
+
+        elif tokens[0].replace('.', '', 1).isdigit() or (tokens[0][0] == '-' and tokens[0][1:].replace('.', '', 1).isdigit()):
+            return float(tokens[0]) if '.' in tokens[0] else int(tokens[0])
+        elif tokens[0] in self.vars:
+            return self.vars[tokens[0]]
+        else:
+            self.skill_issue(f"undefined variable or bad expr: {tokens[0]}")
+
+    def get_value(self, token):
+        if token.startswith('"') and token.endswith('"'):
+            return token[1:-1]
+        if token.replace('.', '', 1).isdigit() or (token[0] == '-' and token[1:].replace('.', '', 1).isdigit()):
+            return float(token) if '.' in token else int(token)
+        elif token in self.vars:
+            return self.vars[token]
+        else:
+            self.skill_issue(f"undefined variable: {token}")
+
+    def skill_issue(self, msg):
+        print(f"skill issue: {msg}")
+        if self.debug_mode:
+            print(f"Debug: Line {self.line_num + 1}")
+            print(f"Debug: Variables: {self.vars}")
+        sys.exit(1)
+
+    def log_execution(self, line):
+        self.total_lines_executed += 1
+        if self.debug_mode:
+            print(f"Debug: Executing line {self.line_num + 1}: {line}")
+
+    def run(self, code):
+        self.execution_start_time = time.time()
+        self.parse(code)
+        print("AURA interpreter starting...")
+        
+        while self.line_num < len(self.lines):
+            self.log_execution(self.lines[self.line_num])
+            self.exec_line(self.lines[self.line_num])
+            self.line_num += 1
+            
+        execution_time = time.time() - self.execution_start_time
+        print(f"\nProgram completed in {execution_time:.3f}s")
+        print(f"Total lines executed: {self.total_lines_executed}")
+        if self.main_character:
+            print(f"Main character: {self.main_character}")
+        print("That's a wrap! No cap!")
+
+    def exec_line(self, line):
+        tokens = line.split()
+        if not tokens:
+            return
+        cmd = tokens[0]
+        
+        if cmd == 'aura':
+            name = tokens[1]
+            if tokens[2] != '=':
+                self.skill_issue('expected =')
+            value = self.eval_expr(' '.join(tokens[3:]))
+            self.vars[name] = value
+        elif cmd == 'gyatt':
+            name = tokens[1]
+            if tokens[2] != '=':
+                self.skill_issue('expected =')
+            value = self.eval_expr(' '.join(tokens[3:]))
+            self.vars[name] = value
+        
+        elif cmd == 'rizz':
+            arg = ' '.join(tokens[1:])
+            if arg.startswith('"') and arg.endswith('"'):
+                print(arg[1:-1])
+            elif arg in self.vars:
+                print(self.vars[arg])
+            else:
+                try:
+                    result = self.eval_expr(arg)
+                    if result is not None:
+                        print(result)
+                except Exception:
+                    self.skill_issue(f'cannot rizz {arg}')
+        
+        elif cmd == 'slay':
+            arg = ' '.join(tokens[1:])
+            result = self.eval_expr(arg) if arg not in self.vars else self.vars[arg]
+            if arg.startswith('"') and arg.endswith('"'):
+                result = arg[1:-1]
+            print(f"[SLAY] {result}")
+        elif cmd == 'periodt':
+            arg = ' '.join(tokens[1:])
+            result = self.eval_expr(arg) if arg not in self.vars else self.vars[arg]
+            if arg.startswith('"') and arg.endswith('"'):
+                result = arg[1:-1]
+            print(f"[PERIODT] {result}")
+        elif cmd == 'vibes':
+            arg = ' '.join(tokens[1:])
+            result = self.eval_expr(arg) if arg not in self.vars else self.vars[arg]
+            if arg.startswith('"') and arg.endswith('"'):
+                result = arg[1:-1]
+            print(f"[VIBES] {result}")
+        
+        elif cmd == 'vibe':
+            name = tokens[1]
+            try:
+                val = input(f"vibe for {name}: ")
+                try:
+                    self.vars[name] = int(val)
+                except ValueError:
+                    try:
+                        self.vars[name] = float(val)
+                    except ValueError:
+                        self.vars[name] = val
+            except Exception as e:
+                self.skill_issue(f'input fail: {e}')
+        
+        elif cmd == 'squad':
+            name = tokens[1]
+            if tokens[2] != '=':
+                self.skill_issue('expected =')
+            if '[' in line and ']' in line:
+                array_str = line[line.index('['):line.index(']')+1]
+                elements = array_str[1:-1].split(',')
+                self.arrays[name] = [self.get_value(e.strip()) for e in elements if e.strip()]
+            else:
+                self.skill_issue('expected array format [1, 2, 3]')
+        elif cmd == 'squadget':
+            arr_name = tokens[1]
+            index = self.get_value(tokens[2])
+            if arr_name in self.arrays and 0 <= index < len(self.arrays[arr_name]):
+                return self.arrays[arr_name][index]
+            else:
+                self.skill_issue(f"can't get index {index} from {arr_name}")
+        elif cmd == 'squadset':
+            arr_name = tokens[1]
+            index = self.get_value(tokens[2])
+            value = self.get_value(tokens[3])
+            if arr_name in self.arrays and 0 <= index < len(self.arrays[arr_name]):
+                self.arrays[arr_name][index] = value
+            else:
+                self.skill_issue(f"can't set index {index} in {arr_name}")
+        elif cmd == 'squadpush':
+            arr_name = tokens[1]
+            value = self.get_value(tokens[2])
+            if arr_name in self.arrays:
+                self.arrays[arr_name].append(value)
+            else:
+                self.skill_issue(f"array {arr_name} not found")
+        elif cmd == 'squadpop':
+            arr_name = tokens[1]
+            if arr_name in self.arrays and self.arrays[arr_name]:
+                return self.arrays[arr_name].pop()
+            else:
+                self.skill_issue(f"can't pop from {arr_name}")
+        elif cmd == 'squadlen':
+            arr_name = tokens[1]
+            if arr_name in self.arrays:
+                return len(self.arrays[arr_name])
+            else:
+                self.skill_issue(f"array {arr_name} not found")
+
+        elif cmd == 'loop':
+            count = self.get_value(tokens[1])
+            loop_body = []
+            self.line_num += 1
+            while self.line_num < len(self.lines) and self.lines[self.line_num] != 'endloop':
+                loop_body.append(self.lines[self.line_num])
+                self.line_num += 1
+            for i in range(count):
+                self.vars['loopindex'] = i
+                for l in loop_body:
+                    self.exec_line(l)
+        elif cmd == 'endloop':
+            pass
+        
+        elif cmd == 'whileloop':
+            condition = ' '.join(tokens[1:])
+            loop_body = []
+            self.line_num += 1
+            while self.line_num < len(self.lines) and self.lines[self.line_num] != 'endwhileloop':
+                loop_body.append(self.lines[self.line_num])
+                self.line_num += 1
+            while self.eval_expr(condition):
+                for l in loop_body:
+                    self.exec_line(l)
+        elif cmd == 'endwhileloop':
+            pass
+        
+        elif cmd == 'bet':
+            if '(' in line and ')' in line:
+                name = tokens[1]
+                params = line[line.index('(')+1:line.index(')')].split(',')
+                params = [p.strip() for p in params if p.strip()]
+                body = []
+                self.line_num += 1
+                while self.line_num < len(self.lines) and self.lines[self.line_num] != 'no-cap':
+                    body.append(self.lines[self.line_num])
+                    self.line_num += 1
+                self.functions[name] = (params, body)
+            else:
+                name = tokens[1]
+                args = line[line.index('(')+1:line.index(')')].split(',')
+                args = [a.strip() for a in args if a.strip()]
+                if name not in self.functions:
+                    self.skill_issue(f'no such function: {name}')
+                params, body = self.functions[name]
+                if len(params) != len(args):
+                    self.skill_issue('argument count mismatch')
+                old_vars = self.vars.copy()
+                for p, a in zip(params, args):
+                    self.vars[p] = self.get_value(a)
+                for bline in body:
+                    self.exec_line(bline)
+                self.vars = old_vars
+        
+        elif cmd == 'betif':
+            cond = self.eval_expr(' '.join(tokens[1:]))
+            if cond:
+                self.line_num += 1
+                while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nobet':
+                    self.exec_line(self.lines[self.line_num])
+                    self.line_num += 1
+            else:
+                self.line_num += 1
+                while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nobet':
+                    self.line_num += 1
+        elif cmd == 'susif':
+            cond = self.eval_expr(' '.join(tokens[1:]))
+            if not cond:
+                self.line_num += 1
+                while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nosus':
+                    self.exec_line(self.lines[self.line_num])
+                    self.line_num += 1
+            else:
+                self.line_num += 1
+                while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nosus':
+                    self.line_num += 1
+        elif cmd == 'no-cap' or cmd == 'nobet' or cmd == 'nosus':
+            pass
+        
+        elif cmd == 'dripcheck':
+            name = tokens[1]
+            val = self.vars.get(name, 0)
+            if val:
+                print(f"{name} got drip")
+            else:
+                print(f"{name} dry fr")
+        elif cmd == 'ghost':
+            name = tokens[1]
+            if self.main_character == name:
+                self.skill_issue(f"can't ghost the main character {name}")
+            if name in self.vars:
+                print(f"{name} has been ghosted")
+                del self.vars[name]
+            else:
+                self.skill_issue(f"can't ghost {name}, not found")
+        elif cmd == 'rizzup':
+            name = tokens[1]
+            if name in self.vars:
+                self.vars[name] += 1
+                print(f"{name} rizzed up to {self.vars[name]}")
+            else:
+                self.skill_issue(f"can't rizzup {name}, not found")
+        elif cmd == 'gyattdown':
+            name = tokens[1]
+            if name in self.vars:
+                self.vars[name] -= 1
+                print(f"{name} gyatt down to {self.vars[name]}")
+            else:
+                self.skill_issue(f"can't gyattdown {name}, not found")
+        elif cmd == 'vibecheck':
+            print("Current aura:")
+            for k, v in self.vars.items():
+                if k != 'loopindex':
+                    print(f"  {k}: {v}")
+            if self.arrays:
+                print("Arrays:")
+                for k, v in self.arrays.items():
+                    print(f"  {k}: {v}")
+        elif cmd == 'maincharacter':
+            name = tokens[1]
+            self.main_character = name
+            print(f"{name} is now the main character!")
