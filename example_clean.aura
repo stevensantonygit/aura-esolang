@@ -1,0 +1,99 @@
+# AURA Example Clean Program
+
+aura x = 10
+maincharacter x
+slay "Welcome to AURA!"
+periodt "The most iconic programming language!"
+
+aura y = 5
+aura sum = slay x y
+aura diff = cap x y
+aura product = drip x y
+aura quotient = sus x y
+aura power_result = power x 2
+aura sqrt_result = sqrt 25
+
+vibes "Math Results:"
+rizz sum
+rizz diff
+rizz product
+rizz quotient
+rizz power_result
+rizz sqrt_result
+
+betif bigger x y
+  periodt "x is bigger than y!"
+nobet
+
+betif flex x 10
+  slay "x equals 10!"
+nobet
+
+aura name = "AURA"
+aura greeting = concat "Hello " name
+aura name_length = length name
+aura upper_name = upper name
+
+vibes "String Operations:"
+rizz greeting
+rizz name_length
+rizz upper_name
+
+squad numbers = [1, 2, 3, 4, 5]
+squad colors = ["red", "blue", "green"]
+vibes "Array Operations:"
+rizz numbers
+rizz colors
+
+slay "Loop Demo:"
+loop 3
+  rizz "Loop iteration:"
+  rizz loopindex
+  rizzup x
+endloop
+
+aura counter = 0
+slay "While Loop Demo:"
+whileloop smaller counter 3
+  rizz "While loop iteration:"
+  rizz counter
+  rizzup counter
+endwhileloop
+
+bet greet (name, age)
+  slay "Hello there!"
+  rizz name
+  rizz age
+  compliment
+no-cap
+
+bet greet ("Alice", 25)
+
+dripcheck x
+rizzup x
+dripcheck x
+gyattdown x
+dripcheck x
+
+motivation
+aesthetic
+compliment
+
+aura current_year = year
+aura current_time = time
+vibes "Current Info:"
+rizz current_year
+rizz current_time
+
+aura random_num = random 1 10
+aura min_val = min 5 10
+aura max_val = max 5 10
+vibes "Random & Math:"
+rizz random_num
+rizz min_val
+rizz max_val
+
+vibecheck
+slay "Program completed successfully!"
+vibes "That's how you do it with AURA!"
+exit

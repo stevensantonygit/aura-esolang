@@ -1,0 +1,156 @@
+# AURA Test Suite
+# This file demonstrates all features of AURA Esolang Edition
+
+slay "AURA Test Suite"
+periodt "===================="
+
+aura x = 10
+aura y = 5
+aura name = "AURA User"
+maincharacter x
+
+vibes "Basic Variables:"
+rizz x
+rizz y
+rizz name
+
+vibes "Math Operations:"
+rizz slay x y           # Addition
+rizz cap x y            # Subtraction
+rizz drip x y           # Multiplication
+rizz sus x y            # Division
+rizz mod x 3            # Modulo
+rizz power x 2          # Power
+rizz sqrt 25            # Square root
+rizz abs -10            # Absolute value
+rizz random 1 10        # Random number
+rizz min x y            # Minimum
+rizz max x y            # Maximum
+
+vibes "Advanced Math:"
+rizz sin 1.57           # Sine
+rizz cos 0              # Cosine
+rizz floor 3.7          # Floor
+rizz ceil 3.2           # Ceiling
+rizz round 3.6          # Round
+
+vibes "String Operations:"
+rizz length name        # String length
+rizz concat name " rocks!"  # Concatenation
+rizz upper name         # Uppercase
+rizz lower name         # Lowercase
+
+vibes "Comparisons:"
+rizz flex x 10          # Equal
+rizz shade x y          # Not equal
+rizz bigger x y         # Greater than
+rizz smaller x y        # Less than
+
+vibes "Logical Operations:"
+rizz and 1 1            # AND
+rizz or 1 0             # OR
+rizz not 0              # NOT
+rizz lit                # True
+rizz false              # False
+
+vibes "Array Operations:"
+squad numbers = [1, 2, 3, 4, 5]
+squad colors = ["red", "blue", "green"]
+squad mixed = [1, "hello", 3.14]
+
+rizz numbers
+rizz colors
+rizz mixed
+
+squadpush numbers 6
+rizz numbers
+squadpop numbers
+rizz numbers
+
+vibes "Loop Demonstrations:"
+loop 3
+  slay "Basic loop iteration:"
+  rizz loopindex
+endloop
+
+aura counter = 0
+whileloop smaller counter 3
+  vibes "While loop iteration:"
+  rizz counter
+  rizzup counter
+endwhileloop
+
+vibes "Conditional Tests:"
+betif bigger x 5
+  slay "x is greater than 5!"
+nobet
+
+susif flex x 0
+  slay "x is not zero!"
+nosus
+
+vibes "Function Examples:"
+bet calculate (a, b, op)
+  betif flex op "add"
+    rizz slay a b
+  nobet
+  betif flex op "mul"
+    rizz drip a b
+  nobet
+no-cap
+
+bet calculate (10, 5, "add")
+bet calculate (10, 5, "mul")
+
+bet countdown (n)
+  betif bigger n 0
+    rizz n
+    aura next = cap n 1
+    bet countdown (next)
+  nobet
+no-cap
+
+slay "Countdown:"
+bet countdown (3)
+
+vibes "Variable Operations:"
+dripcheck x
+dripcheck y
+rizzup x
+rizz x
+gyattdown x
+rizz x
+
+vibes "Special Commands:"
+compliment
+motivation
+aesthetic
+trend x
+
+vibes "Date/Time:"
+rizz time
+rizz year
+rizz month
+rizz day
+rizz hour
+rizz minute
+
+vibes "Advanced Operations:"
+aura test_var = 50
+rizz ratio x y          # Division with meme check
+rizz simp test_var 100  # Set if lower
+rizz clout y            # Double value
+rizz manifest new_var 42 # Create if doesn't exist
+
+save "test_save.json"
+slay "State saved!"
+
+vibecheck
+
+slay "All tests completed successfully!"
+vibes "AURA Esolang is absolutely iconic! :)"
+periodt "You're the main character now!"
+
+help
+
+exit

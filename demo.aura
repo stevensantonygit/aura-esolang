@@ -1,0 +1,31 @@
+# AURA Simple Demo
+
+slay "Welcome to AURA!"
+periodt "Enhanced Edition"
+
+aura x = 10
+aura y = 5
+maincharacter x
+
+aura sum = slay x y
+aura product = drip x y
+slay "Math Results:"
+rizz sum
+rizz product
+
+slay "Loop Demo:"
+loop 3
+  rizz "Iteration:"
+  rizz loopindex
+endloop
+
+dripcheck x
+rizzup x
+dripcheck x
+
+motivation
+compliment
+
+vibecheck
+slay "Demo complete!"
+exit

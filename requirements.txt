@@ -1,0 +1,11 @@
+# AURA Programming Language - Requirements
+
+# Web server dependencies
+Flask>=2.0.0
+
+# Optional: Enhanced development tools
+# colorama>=0.4.0  # For colored terminal output
+# rich>=10.0.0     # For better console formatting
+
+# Python 3.7+ required
+# No additional dependencies needed for core interpreter

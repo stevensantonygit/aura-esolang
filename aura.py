@@ -56,7 +56,16 @@ class AuraEsolang:
         ]
 
     def parse(self, code):
-        self.lines = [line.split('#')[0].strip() for line in code.strip().split('\n') if line.strip() and not line.strip().startswith('#')]
+        processed_lines = []
+        for line in code.strip().split('\n'):
+            if '#' in line:
+                line = line.split('#')[0]
+            if '//' in line:
+                line = line.split('//')[0]
+            line = line.strip()
+            if line and not line.startswith('#') and not line.startswith('//'):
+                processed_lines.append(line)
+        self.lines = processed_lines
         self.line_num = 0
 
     def eval_expr(self, expr):
@@ -231,7 +240,7 @@ class AuraEsolang:
             return datetime.now().minute
         elif tokens[0] == 'second':
             return datetime.now().second
-
+        
         elif tokens[0].replace('.', '', 1).isdigit() or (tokens[0][0] == '-' and tokens[0][1:].replace('.', '', 1).isdigit()):
             return float(tokens[0]) if '.' in tokens[0] else int(tokens[0])
         elif tokens[0] in self.vars:
@@ -303,6 +312,8 @@ class AuraEsolang:
                 print(arg[1:-1])
             elif arg in self.vars:
                 print(self.vars[arg])
+            elif arg in self.arrays:
+                print(self.arrays[arg])
             else:
                 try:
                     result = self.eval_expr(arg)
@@ -313,21 +324,36 @@ class AuraEsolang:
         
         elif cmd == 'slay':
             arg = ' '.join(tokens[1:])
-            result = self.eval_expr(arg) if arg not in self.vars else self.vars[arg]
             if arg.startswith('"') and arg.endswith('"'):
                 result = arg[1:-1]
+            elif arg in self.vars:
+                result = self.vars[arg]
+            elif arg in self.arrays:
+                result = self.arrays[arg]
+            else:
+                result = self.eval_expr(arg)
             print(f"[SLAY] {result}")
         elif cmd == 'periodt':
             arg = ' '.join(tokens[1:])
-            result = self.eval_expr(arg) if arg not in self.vars else self.vars[arg]
             if arg.startswith('"') and arg.endswith('"'):
                 result = arg[1:-1]
+            elif arg in self.vars:
+                result = self.vars[arg]
+            elif arg in self.arrays:
+                result = self.arrays[arg]
+            else:
+                result = self.eval_expr(arg)
             print(f"[PERIODT] {result}")
         elif cmd == 'vibes':
             arg = ' '.join(tokens[1:])
-            result = self.eval_expr(arg) if arg not in self.vars else self.vars[arg]
             if arg.startswith('"') and arg.endswith('"'):
                 result = arg[1:-1]
+            elif arg in self.vars:
+                result = self.vars[arg]
+            elif arg in self.arrays:
+                result = self.arrays[arg]
+            else:
+                result = self.eval_expr(arg)
             print(f"[VIBES] {result}")
         
         elif cmd == 'vibe':
@@ -388,7 +414,7 @@ class AuraEsolang:
                 return len(self.arrays[arr_name])
             else:
                 self.skill_issue(f"array {arr_name} not found")
-
+        
         elif cmd == 'loop':
             count = self.get_value(tokens[1])
             loop_body = []
@@ -511,3 +537,151 @@ class AuraEsolang:
             name = tokens[1]
             self.main_character = name
             print(f"{name} is now the main character!")
+
+        elif cmd == 'compliment':
+            phrase = random.choice(self.compliment_phrases)
+            print(f"{phrase}")
+        elif cmd == 'motivation':
+            motivational_quotes = [
+                "You're absolutely slaying today!",
+                "Main character energy activated!",
+                "You're literally glowing up!",
+                "That's iconic behavior!",
+                "You're living your best life!",
+                "Main character energy is immaculate!",
+                "You're the moment!",
+                "Your vibe is unmatched!",
+                "You're a certified gem!",
+                "You're absolutely sending me (in the best way)!"
+            ]
+            print(random.choice(motivational_quotes))
+        elif cmd == 'aesthetic':
+            aesthetics = [
+                "soft girl vibes",
+                "dark academia energy",
+                "beach day mood",
+                "cottagecore dreams",
+                "ethereal night vibes",
+                "edgy main character",
+                "rainbow unicorn energy",
+                "kawaii princess mode"
+            ]
+            print(random.choice(aesthetics))
+        elif cmd == 'debug':
+            self.debug_mode = not self.debug_mode
+            status = "ON" if self.debug_mode else "OFF"
+            print(f"Debug mode: {status}")
+        elif cmd == 'save':
+            filename = tokens[1] if len(tokens) > 1 else "aura_save.json"
+            save_data = {
+                'vars': self.vars,
+                'arrays': self.arrays,
+                'main_character': self.main_character
+            }
+            with open(filename, 'w') as f:
+                json.dump(save_data, f, indent=2)
+            print(f"State saved to {filename}")
+        elif cmd == 'load':
+            filename = tokens[1] if len(tokens) > 1 else "aura_save.json"
+            try:
+                with open(filename, 'r') as f:
+                    save_data = json.load(f)
+                self.vars = save_data.get('vars', {})
+                self.arrays = save_data.get('arrays', {})
+                self.main_character = save_data.get('main_character')
+                print(f"State loaded from {filename}")
+            except FileNotFoundError:
+                self.skill_issue(f"save file {filename} not found")
+        elif cmd == 'clear':
+            if len(tokens) > 1 and tokens[1] == 'all':
+                self.vars.clear()
+                self.arrays.clear()
+                self.main_character = None
+                print("All variables cleared")
+            else:
+                os.system('cls' if os.name == 'nt' else 'clear')
+        elif cmd == 'help':
+            print("AURA Commands:")
+            print("  aura/gyatt var = value - declare/assign variable")
+            print("  rizz/slay/periodt/vibes - output with style")
+            print("  vibe var - get input")
+            print("  loop n...endloop - basic loop")
+            print("  whileloop condition...endwhileloop - while loop")
+            print("  betif/susif condition - conditionals")
+            print("  bet func(params)...no-cap - define function")
+            print("  squad arr = [1,2,3] - create array")
+            print("  ghost var - delete variable")
+            print("  rizzup/gyattdown var - increment/decrement")
+            print("  vibecheck - show all variables")
+            print("  maincharacter var - set main character")
+            print("  compliment/motivation/aesthetic - random positivity")
+            print("  debug - toggle debug mode")
+            print("  save/load filename - save/load state")
+            print("  clear [all] - clear screen or variables")
+            print("  exit - quit program")
+        elif cmd == 'exit':
+            print('aura out! Thanks for vibing with us!')
+            sys.exit(0)
+        else:
+            self.skill_issue(f'unknown command: {cmd}')
+
+    def tokenize(self, expr):
+        """Tokenize expression properly handling quoted strings with spaces"""
+        tokens = []
+        current_token = ""
+        in_quotes = False
+        
+        i = 0
+        while i < len(expr):
+            char = expr[i]
+            
+            if char == '"':
+                if in_quotes:
+                    current_token += char
+                    tokens.append(current_token)
+                    current_token = ""
+                    in_quotes = False
+                else:
+                    if current_token:
+                        tokens.append(current_token)
+                        current_token = ""
+                    current_token += char
+                    in_quotes = True
+            elif char == ' ' and not in_quotes:
+                if current_token:
+                    tokens.append(current_token)
+                    current_token = ""
+            else:
+                current_token += char
+            
+            i += 1
+        
+        if current_token:
+            tokens.append(current_token)
+        
+        return tokens
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(description='AURA Esolang Interpreter - The Gen Z Programming Language')
+    parser.add_argument('file', help='Path to your AURA esolang file')
+    parser.add_argument('--debug', '-d', action='store_true', help='Enable debug mode')
+    parser.add_argument('--version', '-v', action='version', version='AURA v2.0')
+    args = parser.parse_args()
+    
+    try:
+        with open(args.file, 'r', encoding='utf-8') as f:
+            code = f.read()
+        interpreter = AuraEsolang()
+        if args.debug:
+            interpreter.debug_mode = True
+        interpreter.run(code)
+    except FileNotFoundError:
+        print(f"skill issue: file '{args.file}' not found")
+        sys.exit(1)
+    except UnicodeDecodeError as e:
+        print(f"skill issue: encoding error in file '{args.file}' - {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"skill issue: {e}")
+        sys.exit(1)
