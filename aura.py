@@ -240,6 +240,20 @@ class AuraEsolang:
             return datetime.now().minute
         elif tokens[0] == 'second':
             return datetime.now().second
+
+        elif tokens[0] == 'squadget':
+            arr_name = tokens[1]
+            index = self.get_value(tokens[2])
+            if arr_name in self.arrays and 0 <= index < len(self.arrays[arr_name]):
+                return self.arrays[arr_name][index]
+            else:
+                self.skill_issue(f"can't get index {index} from {arr_name}")
+        elif tokens[0] == 'squadlen':
+            arr_name = tokens[1]
+            if arr_name in self.arrays:
+                return len(self.arrays[arr_name])
+            else:
+                self.skill_issue(f"array {arr_name} not found")
         
         elif tokens[0].replace('.', '', 1).isdigit() or (tokens[0][0] == '-' and tokens[0][1:].replace('.', '', 1).isdigit()):
             return float(tokens[0]) if '.' in tokens[0] else int(tokens[0])
