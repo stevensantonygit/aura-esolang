@@ -187,6 +187,13 @@ def health_check():
 
 if __name__ == '__main__':
     print("Starting AURA Web Server...")
-    print("Open http://localhost:5000 in your browser")
     print("Ready to serve some fire AURA code!")
-    app.run(port=5000, debug=True, host='0.0.0.0')
+    
+    # Get port from environment variable (for deployment) or use 5000 for local
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV') != 'production'
+    
+    if debug:
+        print("Open http://localhost:5000 in your browser")
+    
+    app.run(port=port, debug=debug, host='0.0.0.0')
