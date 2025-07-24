@@ -23,23 +23,20 @@
     .header {
       background: linear-gradient(135deg, #6c47ff 0%, #ff47a3 100%);
       padding: 1.5rem 0;
+      margin-top: 0.5rem;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(108, 71, 255, 0.3);
     }
 
     .header h1 {
-      color: #ffffff;
       font-size: 2.5rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
 
     .header p {
-      color: #f0f0f0;
-      margin-top: 0.5rem;
       font-size: 1.2rem;
-      font-weight: 300;
+      opacity: 0.9;
     }
 
     .container {
@@ -49,347 +46,222 @@
     }
 
     .toolbar {
-      background: linear-gradient(135deg, #23234a 0%, #2d2d5a 100%);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
       display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
       align-items: center;
-      box-shadow: 0 4px 16px rgba(108, 71, 255, 0.2);
-      border: 1px solid rgba(108, 71, 255, 0.3);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
     }
 
     .btn {
       background: linear-gradient(135deg, #6c47ff 0%, #ff47a3 100%);
       color: white;
       border: none;
-      padding: 0.8rem 1.8rem;
-      border-radius: 25px;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 0.9rem;
       font-weight: 600;
       transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
       box-shadow: 0 4px 15px rgba(108, 71, 255, 0.3);
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(108, 71, 255, 0.4);
-      filter: brightness(1.1);
+      box-shadow: 0 6px 20px rgba(108, 71, 255, 0.4);
     }
 
     .btn-secondary {
-      background: linear-gradient(135deg, #4a4a7c 0%, #6a6a9a 100%);
-      box-shadow: 0 4px 15px rgba(74, 74, 124, 0.3);
+      background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+      box-shadow: 0 4px 15px rgba(52, 73, 94, 0.3);
     }
 
     .btn-secondary:hover {
-      box-shadow: 0 8px 25px rgba(74, 74, 124, 0.4);
+      box-shadow: 0 6px 20px rgba(52, 73, 94, 0.4);
     }
 
     .btn-danger {
-      background: linear-gradient(135deg, #ff6b6b 0%, #ffa8a8 100%);
-      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
     }
 
     .btn-danger:hover {
-      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+      box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
     }
 
     .editor-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
-      height: 70vh;
+      height: 500px;
+      margin-bottom: 2rem;
     }
 
     .editor-panel {
-      background: linear-gradient(135deg, #23234a 0%, #2d2d5a 100%);
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(108, 71, 255, 0.15);
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(108, 71, 255, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .panel-header {
-      background: linear-gradient(135deg, #6c47ff 0%, #ff47a3 100%);
-      padding: 1.2rem;
-      color: #ffffff;
-      font-weight: 600;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
     .panel-title {
+      font-weight: 600;
       font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
 
     .status-indicator {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
+      background: #2ecc71;
       border-radius: 50%;
-      background: #00ff88;
       animation: pulse 2s infinite;
-      box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
     }
 
     @keyframes pulse {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.1); }
-      100% { opacity: 1; transform: scale(1); }
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
     }
 
     .editor-container {
       display: flex;
-      height: 100%;
-      position: relative;
+      height: calc(100% - 60px);
     }
 
     .line-numbers {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      color: #6c47ff;
-      padding: 1.5rem 0.8rem;
-      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      background: rgba(0, 0, 0, 0.2);
+      color: #7f8c8d;
+      padding: 1rem 0.5rem;
+      font-family: 'Courier New', monospace;
       font-size: 14px;
       line-height: 1.5;
       text-align: right;
-      border-right: 2px solid rgba(108, 71, 255, 0.3);
-      user-select: none;
-      min-width: 60px;
+      min-width: 50px;
       overflow: hidden;
-      white-space: pre;
-      font-weight: 500;
+      user-select: none;
     }
 
     .code-editor {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      color: #e0e0e0;
+      flex: 1;
+      background: transparent;
       border: none;
-      padding: 1.5rem;
-      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      color: #e0e0e0;
+      font-family: 'Courier New', monospace;
       font-size: 14px;
       line-height: 1.5;
+      padding: 1rem;
       resize: none;
       outline: none;
-      tab-size: 2;
+      overflow-y: auto;
     }
 
-    .code-editor:focus {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      box-shadow: inset 0 0 20px rgba(108, 71, 255, 0.1);
+    .code-editor::placeholder {
+      color: #7f8c8d;
+      opacity: 0.7;
     }
 
     .output-panel {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: rgba(0, 0, 0, 0.3);
       color: #e0e0e0;
-      padding: 1.5rem;
-      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.5;
+      font-family: 'Courier New', monospace;
+      padding: 1rem;
+      height: calc(100% - 60px);
       overflow-y: auto;
       white-space: pre-wrap;
-      height: 100%;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
-    .examples-section {
-      margin-top: 2rem;
-      background: linear-gradient(135deg, #23234a 0%, #2d2d5a 100%);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 8px 32px rgba(108, 71, 255, 0.15);
-      border: 1px solid rgba(108, 71, 255, 0.3);
+    .loading {
+      color: #f39c12;
+      font-weight: bold;
+      animation: blink 1s infinite;
     }
 
-    .examples-title {
-      color: #6c47ff;
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.3; }
+    }
+
+    .features-section {
+      margin: 3rem 0;
+    }
+
+    .features-title {
       text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, #6c47ff 0%, #ff47a3 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .examples-grid {
+    .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
     }
 
-    .example-card {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      border: 2px solid rgba(108, 71, 255, 0.3);
-      border-radius: 12px;
-      padding: 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .example-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, #6c47ff 0%, #ff47a3 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 1;
-    }
-
-    .example-card:hover::before {
-      opacity: 0.1;
-    }
-
-    .example-card:hover {
-      border-color: #6c47ff;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(108, 71, 255, 0.3);
-    }
-
-    .example-card > * {
-      position: relative;
-      z-index: 2;
-    }
-
-    .example-title {
-      color: #6c47ff;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-      font-size: 1.1rem;
-    }
-
-    .example-description {
-      color: #e0e0e0;
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    .features-section {
-      margin-top: 2rem;
-      background: linear-gradient(135deg, #23234a 0%, #2d2d5a 100%);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 8px 32px rgba(108, 71, 255, 0.15);
-      border: 1px solid rgba(108, 71, 255, 0.3);
-    }
-
-    .features-title {
-      color: #6c47ff;
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
     .feature-card {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      border: 2px solid rgba(108, 71, 255, 0.3);
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
       padding: 1.5rem;
-      text-align: center;
-      transition: all 0.3s ease;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
     }
 
     .feature-card:hover {
-      border-color: #6c47ff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(108, 71, 255, 0.2);
+      transform: translateY(-5px);
     }
 
     .feature-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
       color: #6c47ff;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-      font-size: 1.1rem;
     }
 
     .feature-description {
-      color: #e0e0e0;
-      font-size: 0.95rem;
-      opacity: 0.9;
+      opacity: 0.8;
     }
 
     .info-panel {
-      background: linear-gradient(135deg, #6c47ff 0%, #ff47a3 100%);
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
       padding: 2rem;
+      border-radius: 12px;
       margin-top: 2rem;
+      backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 32px rgba(108, 71, 255, 0.3);
     }
 
     .info-title {
-      color: #ffffff;
-      font-weight: 700;
+      font-size: 1.5rem;
       margin-bottom: 1rem;
-      font-size: 1.3rem;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      color: #ff47a3;
+      font-weight: 600;
     }
 
     .info-content {
-      color: #ffffff;
       line-height: 1.8;
-      font-size: 0.95rem;
     }
 
     .info-content code {
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      padding: 0.3rem 0.6rem;
-      border-radius: 6px;
-      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-      font-weight: 600;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .loading {
-      color: #6c47ff;
-      animation: blink 1.5s infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    .aura-keyword {
-      color: #6c47ff;
-      font-weight: 600;
-    }
-
-    .aura-string {
-      color: #ff47a3;
-    }
-
-    .aura-number {
-      color: #00ff88;
-    }
-
-    .aura-comment {
-      color: #888;
-      font-style: italic;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      color: #f39c12;
     }
 
     .aura-operator {
@@ -401,24 +273,19 @@
         grid-template-columns: 1fr;
         height: auto;
       }
-
       .editor-panel {
         height: 400px;
       }
-
       .toolbar {
         justify-content: center;
       }
-
       .container {
         padding: 1rem;
       }
-
       .header h1 {
         font-size: 2rem;
       }
-
-      .examples-grid, .features-grid {
+      .features-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -480,37 +347,13 @@ vibes x
             <span style="font-size: 0.9rem;">Vibing</span>
           </div>
         </div>
-        <div class="output-panel" id="outputPanel">
-Welcome to AURA Web Editor - The Gen Z Programming Language!
+        <div class="output-panel" id="outputPanel">Welcome to AURA Web Editor - The Gen Z Programming Language!
 
 Ready to execute your fire code. Click "Execute Code" to run your program.
 
 System: Online and vibing
 Status: Ready for that main character energy
-No cap - let's code! 🔥
-        </div>
-      </div>
-    </div>
-
-    <div class="examples-section">
-      <h3 class="examples-title">Fire Code Examples</h3>
-      <div class="examples-grid">
-        <div class="example-card" onclick="loadExample('basic')">
-          <div class="example-title">Basic AURA Vibes</div>
-          <div class="example-description">Variables, math, and that main character energy</div>
-        </div>
-        <div class="example-card" onclick="loadExample('arrays')">
-          <div class="example-title">Squad Operations</div>
-          <div class="example-description">Working with arrays and loops - no cap!</div>
-        </div>
-        <div class="example-card" onclick="loadExample('functions')">
-          <div class="example-title">Function Flex</div>
-          <div class="example-description">Creating custom functions that absolutely slay</div>
-        </div>
-        <div class="example-card" onclick="loadExample('advanced')">
-          <div class="example-title">Advanced AURA</div>
-          <div class="example-description">Conditionals, loops, and complex operations</div>
-        </div>
+No cap - let's code! 🔥</div>
       </div>
     </div>
 
@@ -553,128 +396,7 @@ No cap - let's code! 🔥
   </div>
 
   <script>
-    const codeExamples = {
-      basic: `# Basic AURA Operations - No Cap!
-aura x = 15
-aura name = "Main Character"
-maincharacter developer
-slay "Advanced Programming Demo"
-
-# Mathematical functions
-aura base = 16
-aura root = sqrt base
-aura randomNum = random 1 100
-
-periodt "Advanced Math Results:"
-vibes "Square root of "
-vibes base
-vibes " = "
-vibes root
-vibes "Random number: "
-vibes randomNum
-
-# Squad operations
-squad data = [5, 10, 15, 20, 25]
-vibes data
-
-# Conditional logic - main character energy
-betif bigger randomNum 50
-  slay "Random number is greater than 50 - that's iconic!"
-nobet
-
-vibes "Numbers squad: "
-  slay "Random number is less than 50 - still vibing!"
-nosus
-
-# Loop with conditions
-slay "Processing loop:"
-loop 3
-  aura current = drip loopindex 10
-  vibes "Iteration "
-  vibes loopindex
-  vibes ": "
-  vibes current
-endloop
-
-vibes numbers
-slay "Advanced demo completed - absolutely sending me!"
-exit`
-vibes "Names squad: "
-vibes names
-
-slay "Processing numbers with loop:"
-loop 5
-  vibes "Index "
-  vibes loopindex
-  vibes ": "
-  vibes squadget numbers loopindex
-endloop
-
-slay "Squad processing complete - iconic!"
-exit`,
-
-      functions: `# Function Definition - Pure Main Character Energy
-  vibes "Area calculated: "
-  vibes area
-  slay "Calculation complete - no cap!"
-no-cap
-
-bet greetUser(username)
-  slay "Hello, "
-  vibes username
-  vibes "!"
-  vibes "Welcome to the AURA universe"
-no-cap
-
-slay "Function Demo Starting"
-bet calculateArea(10, 5)
-bet greetUser("Gen Z Developer")
-
-slay "All functions executed - absolutely slaying!"
-exit`,
-
-# Mathematical functions
-aura base = 16
-aura root = sqrt base
-aura randomNum = random 1 100
-
-periodt "Advanced Math Results:"
-vibes "Square root of "
-vibes base
-vibes " = "
-vibes root
-vibes "Random number: "
-vibes randomNum
-
-# Squad operations
-squad data = [5, 10, 15, 20, 25]
-slay "Data processing:"
-vibes data
-
-  slay "Random number is greater than 50 - that's iconic!"
-nobet
-`
-susif smaller randomNum 50
-  slay "Random number is less than 50 - still vibing!"
-nosus
-
-
-# Loop with conditions
-slay "Processing loop:"
-loop 3
-  aura current = drip loopindex 10
-  vibes "Iteration "
-  vibes loopindex
-  vibes ": "
-  vibes current
-endloop
-
-vibecheck
-slay "Advanced demo completed - absolutely sending me!"
-exit`
-    };
-
-      basic: `# Basic AURA Operations - No Cap!
+    // Web Editor Core Logic
     const editor = document.getElementById('codeEditor');
     const output = document.getElementById('outputPanel');
     const lineNumbers = document.getElementById('lineNumbers');
@@ -684,24 +406,13 @@ exit`
     function updateEditor() {
       const lines = editor.value.split('\n');
       const lineNumbersArray = [];
-
       for (let i = 1; i <= lines.length; i++) {
         lineNumbersArray.push(i);
       }
-
       lineNumbers.textContent = lineNumbersArray.join('\n');
       lineCount.textContent = lines.length;
       charCount.textContent = editor.value.length;
-
-      basic: `# Basic AURA Operations - No Cap!
       lineNumbers.scrollTop = editor.scrollTop;
-
-      arrays: `# Squad Array Processing - That's Fire!
-    }
-
-    function loadExample(type) {
-      editor.value = codeExamples[type];
-      updateEditor();
     }
 
     function clearOutput() {
@@ -713,10 +424,6 @@ exit`
       updateEditor();
     }
 
-
-      arrays: `# Squad Array Processing - That's Fire!
-
-      functions: `# Function Definition - Pure Main Character Energy
     function showDocumentation() {
       output.textContent = `AURA Language Documentation - No Cap!
 
@@ -731,15 +438,11 @@ Output Commands (Slay Queen!):
   periodt value                   - Output with [PERIODT] prefix (facts)
 
 Input:
-
-      functions: `# Function Definition - Pure Main Character Energy
   vibe variable                   - Get user input (interactive energy)
 
 CONTROL STRUCTURES (Big Brain Time):
 Loops:
   loop count                      - Start loop (use 'loopindex' for counter)
-
-      advanced: `# Advanced AURA Features - This Hits Different
   endloop                         - End loop
   whileloop condition             - While loop (keep going bestie)
   endwhileloop                    - End while loop
@@ -752,8 +455,6 @@ Conditionals:
 
 FUNCTIONS (Custom Code That Slays):
   bet function_name(parameters)   - Define function (bet you didn't see that coming)
-
-      advanced: `# Advanced AURA Features - This Hits Different
   no-cap                          - End function definition (literally no cap)
   bet function_name(arguments)    - Call function (execute that fire code)
 
@@ -790,22 +491,18 @@ SPECIAL VIBES (Pure Iconic Energy):
   trend variable                  - Make variable trending (viral moment)
 
 Ready to create some fire code! No cap, AURA is absolutely iconic! 🔥`;
-    };
-
     }
 
     async function runCode() {
       const code = editor.value.trim();
-
       if (!code) {
         output.textContent = 'Skill issue: No code to execute bestie!\n\nPlease enter some fire AURA code in the editor. No cap!';
         return;
       }
-
+      
       output.innerHTML = '<span class="loading">Executing your fire code... This is about to be iconic!</span>';
-
+      
       try {
-
         const response = await fetch('/run_aura', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -828,11 +525,12 @@ Bestie, here's what you need to check:
 
 Error Details: ${error.message}
 
-For testing purposes, you can use the fire examples provided.
+For testing purposes, you can use the documentation provided.
 This is just a temporary vibe check - your code is still iconic!`;
       }
     }
 
+    // Event listeners
     editor.addEventListener('input', updateEditor);
     editor.addEventListener('scroll', () => {
       lineNumbers.scrollTop = editor.scrollTop;
@@ -854,24 +552,8 @@ This is just a temporary vibe check - your code is still iconic!`;
       }
     });
 
+    // Initialize editor
     updateEditor();
-
-    setTimeout(() => {
-      if (editor.value.trim() === '') {
-        output.textContent = `Welcome to AURA Web Editor - The Gen Z Programming Language!
-
-Ready to execute your fire code. Click "Execute Code" to run your program.
-
-Pro tips:
-- Use Ctrl+Enter to execute code quickly
-- Check out the examples below for inspiration
-- Type 'help' in your code for full command reference
-
-System: Online and absolutely vibing
-Status: Ready for that main character energy
-No cap - let's create something iconic! 🔥`;
-      }
-    }, 1000);
   </script>
 </body>
 </html>
