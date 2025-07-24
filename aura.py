@@ -326,7 +326,7 @@ class AuraEsolang:
                 print(arg[1:-1])
             else:
                 try:
-                    result = self.eval_expr(arg)
+                    result = self.eval_expr(line)
                     if result is not None:
                         print(result)
                 except Exception:
@@ -337,21 +337,21 @@ class AuraEsolang:
             if arg.startswith('"') and arg.endswith('"'):
                 result = arg[1:-1]
             else:
-                result = self.eval_expr(arg)
+                result = self.eval_expr(line)
             print(f"[SLAY] {result}")
         elif cmd == 'periodt':
             arg = ' '.join(tokens[1:])
             if arg.startswith('"') and arg.endswith('"'):
                 result = arg[1:-1]
             else:
-                result = self.eval_expr(arg)
+                result = self.eval_expr(line)
             print(f"[PERIODT] {result}")
         elif cmd == 'vibes':
             arg = ' '.join(tokens[1:])
             if arg.startswith('"') and arg.endswith('"'):
                 result = arg[1:-1]
             else:
-                result = self.eval_expr(arg)
+                result = self.eval_expr(line)
             print(f"[VIBES] {result}")
         
         elif cmd == 'vibe':
