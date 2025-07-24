@@ -28,7 +28,7 @@
 
 ## Features
 
-- **Gen Z Syntax**: Keywords like `rizz`, `slay`, `bet`, `no-cap`, `vibes` and more
+- **Gen Z Syntax**: Keywords like `slay`, `bet`, `no-cap`, `vibes` and more
 - **Mathematical Operations**: Comprehensive math functions including square root, random numbers, and basic arithmetic
 - **Array Support**: Create and manipulate arrays with `squad` commands
 - **Functions**: Define and call custom functions with `bet` and `no-cap`
@@ -89,7 +89,7 @@ maincharacter x      # Protect variable from deletion
 
 ### Output Commands
 ```aura
-rizz "Hello World!"      # Basic output
+vibes "Hello World!"      # Output with [VIBES] prefix
 slay "Hot content!"      # Output with [SLAY] prefix
 periodt "Statement!"     # Output with [PERIODT] prefix
 vibes "Good energy!"     # Output with [VIBES] prefix
@@ -150,14 +150,14 @@ squadlen numbers                    # Get array length
 ```aura
 # Basic loop with counter
 loop 5
-  rizz "Hello!"
-  rizz loopindex    # Built-in loop counter (0-based)
+  vibes "Hello!"
+  vibes loopindex    # Built-in loop counter (0-based)
 endloop
 
 # While loop
 aura x = 0
 whileloop smaller x 5
-  rizz x
+  vibes x
   rizzup x
 endwhileloop
 ```
@@ -166,12 +166,12 @@ endwhileloop
 ```aura
 # If statement
 betif bigger x 10
-  rizz "x is big!"
+  vibes "x is big!"
 nobet
 
 # If not statement
 susif flex x 0
-  rizz "x is not zero!"
+  vibes "x is not zero!"
 nosus
 ```
 
@@ -180,8 +180,8 @@ nosus
 # Define function
 bet greet(name, age)
   slay "Hello!"
-  rizz name
-  rizz age
+  vibes name
+  vibes age
 no-cap
 
 # Call function
@@ -222,10 +222,10 @@ aura y = 5
 maincharacter x
 
 slay "Math Operations:"
-rizz slay x y    # Addition: 15
-rizz cap x y     # Subtraction: 5
-rizz drip x y    # Multiplication: 50
-rizz sus x y     # Division: 2
+vibes slay x y    # Addition: 15
+vibes cap x y     # Subtraction: 5
+vibes drip x y    # Multiplication: 50
+vibes sus x y     # Division: 2
 
 vibecheck
 exit
@@ -235,14 +235,14 @@ exit
 ```aura
 squad numbers = [1, 2, 3, 4, 5]
 slay "Array contents:"
-rizz numbers
+vibes numbers
 
 slay "Processing elements:"
 loop 5
-  rizz "Index"
-  rizz loopindex
-  rizz ":"
-  rizz squadget numbers loopindex
+  vibes "Index"
+  vibes loopindex
+  vibes ":"
+  vibes squadget numbers loopindex
 endloop
 
 exit
@@ -252,7 +252,7 @@ exit
 ```aura
 bet greet(name)
   slay "Hello there,"
-  rizz name
+  vibes name
   periodt "Welcome to AURA!"
 no-cap
 

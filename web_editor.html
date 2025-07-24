@@ -462,7 +462,7 @@
 # Example:
 aura x = 10
 slay 'Hello, AURA!'
-rizz x
+vibes x
 
 # Try running some code! No cap!"
             spellcheck="false"
@@ -540,7 +540,7 @@ No cap - let's code! 🔥
       <div class="info-title">AURA Quick Reference - No Cap!</div>
       <div class="info-content">
         <strong>Variables:</strong> <code>aura name = value</code><br>
-        <strong>Output:</strong> <code>rizz value</code>, <code>slay value</code>, <code>periodt value</code><br>
+        <strong>Output:</strong> <code>slay value</code>, <code>periodt value</code>, <code>vibes value</code><br>
         <strong>Squad Arrays:</strong> <code>squad arr = [1, 2, 3]</code><br>
         <strong>Functions:</strong> <code>bet function_name(params) ... no-cap</code><br>
         <strong>Loops:</strong> <code>loop count ... endloop</code><br>
@@ -556,73 +556,7 @@ No cap - let's code! 🔥
     const codeExamples = {
       basic: `# Basic AURA Operations - No Cap!
 aura x = 15
-aura y = 7
 aura name = "Main Character"
-maincharacter x
-
-slay "Welcome to AURA!"
-rizz "User: "
-rizz name
-
-aura sum = slay x y
-aura difference = cap x y
-aura product = drip x y
-
-periodt "Mathematical Results:"
-rizz "Sum: "
-rizz sum
-rizz "Difference: "
-rizz difference
-rizz "Product: "
-rizz product
-
-vibecheck
-exit`,
-
-      arrays: `# Squad Array Processing - That's Fire!
-squad numbers = [10, 20, 30, 40, 50]
-squad names = ["Alice", "Bob", "Charlie", "Diana"]
-
-slay "Squad Processing Demo"
-rizz "Numbers squad: "
-rizz numbers
-rizz "Names squad: "
-rizz names
-
-slay "Processing numbers with loop:"
-loop 5
-  rizz "Index "
-  rizz loopindex
-  rizz ": "
-  rizz squadget numbers loopindex
-endloop
-
-slay "Squad processing complete - iconic!"
-exit`,
-
-      functions: `# Function Definition - Pure Main Character Energy
-bet calculateArea(width, height)
-  aura area = drip width height
-  rizz "Area calculated: "
-  rizz area
-  slay "Calculation complete - no cap!"
-no-cap
-
-bet greetUser(username)
-  slay "Hello, "
-  rizz username
-  rizz "!"
-  rizz "Welcome to the AURA universe"
-no-cap
-
-slay "Function Demo Starting"
-bet calculateArea(10, 5)
-bet greetUser("Gen Z Developer")
-
-slay "All functions executed - absolutely slaying!"
-exit`,
-
-      advanced: `# Advanced AURA Features - This Hits Different
 maincharacter developer
 slay "Advanced Programming Demo"
 
@@ -632,24 +566,23 @@ aura root = sqrt base
 aura randomNum = random 1 100
 
 periodt "Advanced Math Results:"
-rizz "Square root of "
-rizz base
-rizz " = "
-rizz root
-rizz "Random number: "
-rizz randomNum
+vibes "Square root of "
+vibes base
+vibes " = "
+vibes root
+vibes "Random number: "
+vibes randomNum
 
 # Squad operations
 squad data = [5, 10, 15, 20, 25]
-slay "Data processing:"
-rizz data
+vibes data
 
 # Conditional logic - main character energy
 betif bigger randomNum 50
   slay "Random number is greater than 50 - that's iconic!"
 nobet
 
-susif smaller randomNum 50
+vibes "Numbers squad: "
   slay "Random number is less than 50 - still vibing!"
 nosus
 
@@ -657,10 +590,83 @@ nosus
 slay "Processing loop:"
 loop 3
   aura current = drip loopindex 10
-  rizz "Iteration "
-  rizz loopindex
-  rizz ": "
-  rizz current
+  vibes "Iteration "
+  vibes loopindex
+  vibes ": "
+  vibes current
+endloop
+
+vibes numbers
+slay "Advanced demo completed - absolutely sending me!"
+exit`
+vibes "Names squad: "
+vibes names
+
+slay "Processing numbers with loop:"
+loop 5
+  vibes "Index "
+  vibes loopindex
+  vibes ": "
+  vibes squadget numbers loopindex
+endloop
+
+slay "Squad processing complete - iconic!"
+exit`,
+
+      functions: `# Function Definition - Pure Main Character Energy
+  vibes "Area calculated: "
+  vibes area
+  slay "Calculation complete - no cap!"
+no-cap
+
+bet greetUser(username)
+  slay "Hello, "
+  vibes username
+  vibes "!"
+  vibes "Welcome to the AURA universe"
+no-cap
+
+slay "Function Demo Starting"
+bet calculateArea(10, 5)
+bet greetUser("Gen Z Developer")
+
+slay "All functions executed - absolutely slaying!"
+exit`,
+
+# Mathematical functions
+aura base = 16
+aura root = sqrt base
+aura randomNum = random 1 100
+
+periodt "Advanced Math Results:"
+vibes "Square root of "
+vibes base
+vibes " = "
+vibes root
+vibes "Random number: "
+vibes randomNum
+
+# Squad operations
+squad data = [5, 10, 15, 20, 25]
+slay "Data processing:"
+vibes data
+
+  slay "Random number is greater than 50 - that's iconic!"
+nobet
+`
+susif smaller randomNum 50
+  slay "Random number is less than 50 - still vibing!"
+nosus
+
+
+# Loop with conditions
+slay "Processing loop:"
+loop 3
+  aura current = drip loopindex 10
+  vibes "Iteration "
+  vibes loopindex
+  vibes ": "
+  vibes current
 endloop
 
 vibecheck
@@ -668,6 +674,7 @@ slay "Advanced demo completed - absolutely sending me!"
 exit`
     };
 
+      basic: `# Basic AURA Operations - No Cap!
     const editor = document.getElementById('codeEditor');
     const output = document.getElementById('outputPanel');
     const lineNumbers = document.getElementById('lineNumbers');
@@ -686,7 +693,10 @@ exit`
       lineCount.textContent = lines.length;
       charCount.textContent = editor.value.length;
 
+      basic: `# Basic AURA Operations - No Cap!
       lineNumbers.scrollTop = editor.scrollTop;
+
+      arrays: `# Squad Array Processing - That's Fire!
     }
 
     function loadExample(type) {
@@ -703,6 +713,10 @@ exit`
       updateEditor();
     }
 
+
+      arrays: `# Squad Array Processing - That's Fire!
+
+      functions: `# Function Definition - Pure Main Character Energy
     function showDocumentation() {
       output.textContent = `AURA Language Documentation - No Cap!
 
@@ -712,17 +726,20 @@ Variables:
   gyatt variable = value          - Alternative assignment (absolutely iconic)
 
 Output Commands (Slay Queen!):
-  rizz value                      - Basic output (classic vibes)
+  vibes value                     - Output with [VIBES] prefix (that's the mood)
   slay value                      - Output with [SLAY] prefix (periodt!)
   periodt value                   - Output with [PERIODT] prefix (facts)
-  vibes value                     - Output with [VIBES] prefix (that's the mood)
 
 Input:
+
+      functions: `# Function Definition - Pure Main Character Energy
   vibe variable                   - Get user input (interactive energy)
 
 CONTROL STRUCTURES (Big Brain Time):
 Loops:
   loop count                      - Start loop (use 'loopindex' for counter)
+
+      advanced: `# Advanced AURA Features - This Hits Different
   endloop                         - End loop
   whileloop condition             - While loop (keep going bestie)
   endwhileloop                    - End while loop
@@ -735,6 +752,8 @@ Conditionals:
 
 FUNCTIONS (Custom Code That Slays):
   bet function_name(parameters)   - Define function (bet you didn't see that coming)
+
+      advanced: `# Advanced AURA Features - This Hits Different
   no-cap                          - End function definition (literally no cap)
   bet function_name(arguments)    - Call function (execute that fire code)
 
@@ -771,6 +790,8 @@ SPECIAL VIBES (Pure Iconic Energy):
   trend variable                  - Make variable trending (viral moment)
 
 Ready to create some fire code! No cap, AURA is absolutely iconic! 🔥`;
+    };
+
     }
 
     async function runCode() {

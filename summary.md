@@ -9,10 +9,9 @@ AURA is a Gen Z-inspired esoteric programming language where every keyword refle
 ### Variable Operations
 - **aura var = value** - Variable declaration
 - **gyatt var = value** - Variable assignment  
-- **rizz var** - Output variable or string
 - **vibe var** - Get user input
 - **ghost var** - Delete variable
-- **rizzup var** - Increment variable
+**rizzup var** - Increment variable
 - **gyattdown var** - Decrement variable
 - **maincharacter var** - Set variable as main character (cannot be deleted)
 
@@ -171,7 +170,7 @@ aura x = 10
 aura y = 5
 maincharacter x
 slay "Welcome to AURA!"
-rizz slay x y
+vibes slay x y
 betif bigger x y
   periodt "x is bigger than y!"
 nobet
@@ -181,17 +180,17 @@ nobet
 ```aura
 squad numbers = [1, 2, 3, 4, 5]
 squadpush numbers 6
-rizz numbers
+vibes numbers
 loop 3
-  rizz loopindex
+  vibes loopindex
 endloop
 ```
 
 ### Function Example
 ```aura
 bet calculate (a, b)
-  rizz slay a b
-  rizz cap a b
+  vibes slay a b
+  vibes cap a b
 no-cap
 
 bet calculate (10, 5)
