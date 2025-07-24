@@ -14,12 +14,12 @@ aura power_result = power x 2
 aura sqrt_result = sqrt 25
 
 vibes "Math Results:"
-rizz sum
-rizz diff
-rizz product
-rizz quotient
-rizz power_result
-rizz sqrt_result
+slay sum
+slay diff
+slay product
+slay quotient
+slay power_result
+slay sqrt_result
 
 betif bigger x y
   periodt "x is bigger than y!"
@@ -35,42 +35,42 @@ aura name_length = length name
 aura upper_name = upper name
 
 vibes "String Operations:"
-rizz greeting
-rizz name_length
-rizz upper_name
+slay greeting
+slay name_length
+slay upper_name
 
 squad numbers = [1, 2, 3, 4, 5]
 squad colors = ["red", "blue", "green"]
 vibes "Array Operations:"
-rizz numbers
-rizz colors
+slay numbers
+slay colors
 
 slay "Loop Demo:"
 loop 3
-  rizz "Loop iteration:"
-  rizz loopindex
-  rizzup x
+  slay "Loop iteration:"
+  slay loopindex
+  slay x
 endloop
 
 aura counter = 0
 slay "While Loop Demo:"
 whileloop smaller counter 3
-  rizz "While loop iteration:"
-  rizz counter
-  rizzup counter
+  slay "While loop iteration:"
+  slay counter
+  slay counter
 endwhileloop
 
 bet greet (name, age)
   slay "Hello there!"
-  rizz name
-  rizz age
+  slay name
+  slay age
   compliment
 no-cap
 
 bet greet ("Alice", 25)
 
 dripcheck x
-rizzup x
+slay x
 dripcheck x
 gyattdown x
 dripcheck x
@@ -82,16 +82,16 @@ compliment
 aura current_year = year
 aura current_time = time
 vibes "Current Info:"
-rizz current_year
-rizz current_time
+slay current_year
+slay current_time
 
 aura random_num = random 1 10
 aura min_val = min 5 10
 aura max_val = max 5 10
 vibes "Random & Math:"
-rizz random_num
-rizz min_val
-rizz max_val
+slay random_num
+slay min_val
+slay max_val
 
 vibecheck
 slay "Program completed successfully!"

@@ -10,17 +10,17 @@ maincharacter x
 aura sum = slay x y
 aura product = drip x y
 slay "Math Results:"
-rizz sum
-rizz product
+slay sum
+slay product
 
 slay "Loop Demo:"
 loop 3
-  rizz "Iteration:"
-  rizz loopindex
+  slay "Iteration:"
+  slay loopindex
 endloop
 
 dripcheck x
-rizzup x
+slay x
 dripcheck x
 
 motivation

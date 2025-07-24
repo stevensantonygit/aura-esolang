@@ -1,5 +1,9 @@
+
 # AURA Test Suite
 # This file demonstrates all features of AURA Esolang Edition
+squad numbers = [1, 2, 3, 4, 5]
+squad colors = ["red", "blue", "green"]
+squad mixed = [1, "hello", 3.14]
 
 slay "AURA Test Suite"
 periodt "===================="
@@ -10,74 +14,60 @@ aura name = "AURA User"
 maincharacter x
 
 vibes "Basic Variables:"
-rizz x
-rizz y
-rizz name
+slay x
+slay y
+slay name
 
 vibes "Math Operations:"
-rizz slay x y           # Addition
-rizz cap x y            # Subtraction
-rizz drip x y           # Multiplication
-rizz sus x y            # Division
-rizz mod x 3            # Modulo
-rizz power x 2          # Power
-rizz sqrt 25            # Square root
-rizz abs -10            # Absolute value
-rizz random 1 10        # Random number
-rizz min x y            # Minimum
-rizz max x y            # Maximum
+slay slay x y           # Addition
+slay cap x y            # Subtraction
+slay drip x y           # Multiplication
+slay sus x y            # Division
+slay mod x 3            # Modulo
+slay power x 2          # Power
+slay sqrt 25            # Square root
+slay abs -10            # Absolute value
+slay random 1 10        # Random number
+slay min x y            # Minimum
+slay max x y            # Maximum
 
 vibes "Advanced Math:"
-rizz sin 1.57           # Sine
-rizz cos 0              # Cosine
-rizz floor 3.7          # Floor
-rizz ceil 3.2           # Ceiling
-rizz round 3.6          # Round
+slay sin 1.57           # Sine
+slay cos 0              # Cosine
+slay floor 3.7          # Floor
+slay ceil 3.2           # Ceiling
+slay round 3.6          # Round
 
 vibes "String Operations:"
-rizz length name        # String length
-rizz concat name " rocks!"  # Concatenation
-rizz upper name         # Uppercase
-rizz lower name         # Lowercase
+slay length name        # String length
+slay concat name " rocks!"  # Concatenation
+slay upper name         # Uppercase
+slay lower name         # Lowercase
 
 vibes "Comparisons:"
-rizz flex x 10          # Equal
-rizz shade x y          # Not equal
-rizz bigger x y         # Greater than
-rizz smaller x y        # Less than
+slay flex x 10          # Equal
+slay shade x y          # Not equal
+slay bigger x y         # Greater than
+slay smaller x y        # Less than
 
 vibes "Logical Operations:"
-rizz and 1 1            # AND
-rizz or 1 0             # OR
-rizz not 0              # NOT
-rizz lit                # True
-rizz false              # False
 
-vibes "Array Operations:"
-squad numbers = [1, 2, 3, 4, 5]
-squad colors = ["red", "blue", "green"]
-squad mixed = [1, "hello", 3.14]
 
-rizz numbers
-rizz colors
-rizz mixed
 
 squadpush numbers 6
-rizz numbers
 squadpop numbers
-rizz numbers
 
 vibes "Loop Demonstrations:"
 loop 3
   slay "Basic loop iteration:"
-  rizz loopindex
+  slay loopindex
 endloop
 
 aura counter = 0
 whileloop smaller counter 3
   vibes "While loop iteration:"
-  rizz counter
-  rizzup counter
+  slay counter
+  slay counter
 endwhileloop
 
 vibes "Conditional Tests:"
@@ -92,10 +82,10 @@ nosus
 vibes "Function Examples:"
 bet calculate (a, b, op)
   betif flex op "add"
-    rizz slay a b
+    slay slay a b
   nobet
   betif flex op "mul"
-    rizz drip a b
+    slay drip a b
   nobet
 no-cap
 
@@ -104,7 +94,7 @@ bet calculate (10, 5, "mul")
 
 bet countdown (n)
   betif bigger n 0
-    rizz n
+    slay n
     aura next = cap n 1
     bet countdown (next)
   nobet
@@ -116,10 +106,10 @@ bet countdown (3)
 vibes "Variable Operations:"
 dripcheck x
 dripcheck y
-rizzup x
-rizz x
+slay x
+slay x
 gyattdown x
-rizz x
+slay x
 
 vibes "Special Commands:"
 compliment
@@ -128,19 +118,19 @@ aesthetic
 trend x
 
 vibes "Date/Time:"
-rizz time
-rizz year
-rizz month
-rizz day
-rizz hour
-rizz minute
+slay time
+slay year
+slay month
+slay day
+slay hour
+slay minute
 
 vibes "Advanced Operations:"
 aura test_var = 50
-rizz ratio x y          # Division with meme check
-rizz simp test_var 100  # Set if lower
-rizz clout y            # Double value
-rizz manifest new_var 42 # Create if doesn't exist
+slay ratio x y          # Division with meme check
+slay simp test_var 100  # Set if lower
+slay clout y            # Double value
+slay manifest new_var 42 # Create if doesn't exist
 
 save "test_save.json"
 slay "State saved!"

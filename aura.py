@@ -269,6 +269,8 @@ class AuraEsolang:
             return float(token) if '.' in token else int(token)
         elif token in self.vars:
             return self.vars[token]
+        elif token in self.arrays:
+            return self.arrays[token]
         else:
             self.skill_issue(f"undefined variable: {token}")
 
@@ -321,7 +323,28 @@ class AuraEsolang:
             self.vars[name] = value
         
         elif cmd in [
-            'rizz', 'slay', 'cap', 'drip', 'sus', 'mod', 'power',
+            'slay', 'periodt', 'vibes'
+        ]:
+            # Output commands: print all arguments joined by space, support arrays/vars
+            output_parts = []
+            for arg in tokens[1:]:
+                if arg in self.vars:
+                    output_parts.append(str(self.vars[arg]))
+                elif arg in self.arrays:
+                    output_parts.append(str(self.arrays[arg]))
+                elif arg.startswith('"') and arg.endswith('"'):
+                    output_parts.append(arg[1:-1])
+                else:
+                    output_parts.append(arg)
+            joined = ' '.join(output_parts)
+            if cmd == 'slay':
+                print(f"[SLAY] {joined}")
+            elif cmd == 'periodt':
+                print(f"[PERIODT] {joined}")
+            elif cmd == 'vibes':
+                print(f"[VIBES] {joined}")
+        elif cmd in [
+            'cap', 'drip', 'sus', 'mod', 'power',
             'flex', 'shade', 'bigger', 'smaller', 'bigflex', 'smallflex',
             'and', 'or', 'not', 'min', 'max', 'ratio', 'simp', 'clout', 'cancel',
             'manifest', 'vibeflip', 'squad', 'glowup', 'spill', 'pause', 'trend',
@@ -331,23 +354,12 @@ class AuraEsolang:
             'lit', 'false'
         ]:
             arg = ' '.join(tokens[1:])
-            # For string output, print as is
-            if arg.startswith('"') and arg.endswith('"'):
-                result = arg[1:-1]
-            else:
-                try:
-                    result = self.eval_expr(line)
-                except Exception:
-                    self.skill_issue(f'cannot {cmd} {arg}')
-            if cmd == 'slay':
-                print(f"[SLAY] {result}")
-            elif cmd == 'periodt':
-                print(f"[PERIODT] {result}")
-            elif cmd == 'vibes':
-                print(f"[VIBES] {result}")
-            else:
-                if result is not None:
-                    print(result)
+            try:
+                result = self.eval_expr(line)
+            except Exception:
+                self.skill_issue(f'cannot {cmd} {arg}')
+            if result is not None:
+                print(result)
         
         elif cmd == 'vibe':
             name = tokens[1]
@@ -364,20 +376,24 @@ class AuraEsolang:
                 self.skill_issue(f'input fail: {e}')
         
         elif cmd == 'squad':
+            # squad arr = [1,2,3] or squad arr = [a, b, 3]
             name = tokens[1]
             if tokens[2] != '=':
                 self.skill_issue('expected =')
-            if '[' in line and ']' in line:
-                array_str = line[line.index('['):line.index(']')+1]
-                elements = array_str[1:-1].split(',')
-                self.arrays[name] = [self.get_value(e.strip()) for e in elements if e.strip()]
+            arr_start = line.find('[')
+            arr_end = line.find(']')
+            if arr_start != -1 and arr_end != -1 and arr_end > arr_start:
+                array_str = line[arr_start+1:arr_end]
+                elements = [e.strip() for e in array_str.split(',') if e.strip()]
+                self.arrays[name] = [self.get_value(e) if e in self.vars else self.get_value(e) for e in elements]
+                print(f"[DEBUG] Arrays after squad: {self.arrays}")
             else:
                 self.skill_issue('expected array format [1, 2, 3]')
         elif cmd == 'squadget':
             arr_name = tokens[1]
             index = self.get_value(tokens[2])
             if arr_name in self.arrays and 0 <= index < len(self.arrays[arr_name]):
-                return self.arrays[arr_name][index]
+                print(self.arrays[arr_name][index])
             else:
                 self.skill_issue(f"can't get index {index} from {arr_name}")
         elif cmd == 'squadset':
@@ -386,6 +402,7 @@ class AuraEsolang:
             value = self.get_value(tokens[3])
             if arr_name in self.arrays and 0 <= index < len(self.arrays[arr_name]):
                 self.arrays[arr_name][index] = value
+                print(f"{arr_name}[{index}] set to {value}")
             else:
                 self.skill_issue(f"can't set index {index} in {arr_name}")
         elif cmd == 'squadpush':
@@ -393,18 +410,20 @@ class AuraEsolang:
             value = self.get_value(tokens[2])
             if arr_name in self.arrays:
                 self.arrays[arr_name].append(value)
+                print(f"{value} pushed to {arr_name}")
             else:
                 self.skill_issue(f"array {arr_name} not found")
         elif cmd == 'squadpop':
             arr_name = tokens[1]
             if arr_name in self.arrays and self.arrays[arr_name]:
-                return self.arrays[arr_name].pop()
+                val = self.arrays[arr_name].pop()
+                print(f"{val} popped from {arr_name}")
             else:
                 self.skill_issue(f"can't pop from {arr_name}")
         elif cmd == 'squadlen':
             arr_name = tokens[1]
             if arr_name in self.arrays:
-                return len(self.arrays[arr_name])
+                print(len(self.arrays[arr_name]))
             else:
                 self.skill_issue(f"array {arr_name} not found")
         
