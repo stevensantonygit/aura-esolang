@@ -324,10 +324,6 @@ class AuraEsolang:
             arg = ' '.join(tokens[1:])
             if arg.startswith('"') and arg.endswith('"'):
                 print(arg[1:-1])
-            elif arg in self.vars:
-                print(self.vars[arg])
-            elif arg in self.arrays:
-                print(self.arrays[arg])
             else:
                 try:
                     result = self.eval_expr(arg)
@@ -335,15 +331,11 @@ class AuraEsolang:
                         print(result)
                 except Exception:
                     self.skill_issue(f'cannot rizz {arg}')
-        
+
         elif cmd == 'slay':
             arg = ' '.join(tokens[1:])
             if arg.startswith('"') and arg.endswith('"'):
                 result = arg[1:-1]
-            elif arg in self.vars:
-                result = self.vars[arg]
-            elif arg in self.arrays:
-                result = self.arrays[arg]
             else:
                 result = self.eval_expr(arg)
             print(f"[SLAY] {result}")
@@ -351,10 +343,6 @@ class AuraEsolang:
             arg = ' '.join(tokens[1:])
             if arg.startswith('"') and arg.endswith('"'):
                 result = arg[1:-1]
-            elif arg in self.vars:
-                result = self.vars[arg]
-            elif arg in self.arrays:
-                result = self.arrays[arg]
             else:
                 result = self.eval_expr(arg)
             print(f"[PERIODT] {result}")
@@ -362,10 +350,6 @@ class AuraEsolang:
             arg = ' '.join(tokens[1:])
             if arg.startswith('"') and arg.endswith('"'):
                 result = arg[1:-1]
-            elif arg in self.vars:
-                result = self.vars[arg]
-            elif arg in self.arrays:
-                result = self.arrays[arg]
             else:
                 result = self.eval_expr(arg)
             print(f"[VIBES] {result}")
