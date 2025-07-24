@@ -320,39 +320,34 @@ class AuraEsolang:
             value = self.eval_expr(' '.join(tokens[3:]))
             self.vars[name] = value
         
-        elif cmd == 'rizz':
+        elif cmd in [
+            'rizz', 'slay', 'cap', 'drip', 'sus', 'mod', 'power',
+            'flex', 'shade', 'bigger', 'smaller', 'bigflex', 'smallflex',
+            'and', 'or', 'not', 'min', 'max', 'ratio', 'simp', 'clout', 'cancel',
+            'manifest', 'vibeflip', 'squad', 'glowup', 'spill', 'pause', 'trend',
+            'time', 'year', 'month', 'day', 'hour', 'minute', 'second',
+            'sqrt', 'abs', 'floor', 'ceil', 'round', 'sin', 'cos', 'tan', 'log', 'random',
+            'length', 'concat', 'upper', 'lower', 'squadget', 'squadlen',
+            'lit', 'false'
+        ]:
             arg = ' '.join(tokens[1:])
+            # For string output, print as is
             if arg.startswith('"') and arg.endswith('"'):
-                print(arg[1:-1])
+                result = arg[1:-1]
             else:
                 try:
                     result = self.eval_expr(line)
-                    if result is not None:
-                        print(result)
                 except Exception:
-                    self.skill_issue(f'cannot rizz {arg}')
-
-        elif cmd == 'slay':
-            arg = ' '.join(tokens[1:])
-            if arg.startswith('"') and arg.endswith('"'):
-                result = arg[1:-1]
+                    self.skill_issue(f'cannot {cmd} {arg}')
+            if cmd == 'slay':
+                print(f"[SLAY] {result}")
+            elif cmd == 'periodt':
+                print(f"[PERIODT] {result}")
+            elif cmd == 'vibes':
+                print(f"[VIBES] {result}")
             else:
-                result = self.eval_expr(line)
-            print(f"[SLAY] {result}")
-        elif cmd == 'periodt':
-            arg = ' '.join(tokens[1:])
-            if arg.startswith('"') and arg.endswith('"'):
-                result = arg[1:-1]
-            else:
-                result = self.eval_expr(line)
-            print(f"[PERIODT] {result}")
-        elif cmd == 'vibes':
-            arg = ' '.join(tokens[1:])
-            if arg.startswith('"') and arg.endswith('"'):
-                result = arg[1:-1]
-            else:
-                result = self.eval_expr(line)
-            print(f"[VIBES] {result}")
+                if result is not None:
+                    print(result)
         
         elif cmd == 'vibe':
             name = tokens[1]
