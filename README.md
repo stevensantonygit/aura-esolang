@@ -196,9 +196,7 @@ exit                # Quit program
 vibes "Hello World!"
 periodt "Welcome to AURA!"
 motivation
-exit
-vibes drip x y    # Multiplication: 50
-```aura
+
 aura x = 10
 aura y = 5
 maincharacter x
@@ -253,51 +251,6 @@ susif smaller age 13
 nosus
 
 vibecheck
-exit
-```
-
-### Complete Example
-```aura
-# Complete AURA program demonstration
-slay "Welcome to AURA Programming Language"
-
-# Variable declarations
-aura username = "CodeMaster"
-aura score = 0
-maincharacter username
-
-
-
-# Mathematical operations
-aura points = random 50 100
-aura bonus = drip points 2
-gyatt score = slay score points bonus
-
-# Conditional logic
-betif bigger score 200
-  slay "High score achieved!"
-  compliment
-nobet
-
-# Function definition
-bet displayStats(user, points)
-  slay "Player Stats:"
-  rizz user
-  rizz points
-  aesthetic
-no-cap
-
-# Function call
-bet displayStats(username, score)
-
-# Loop demonstration
-slay "Countdown:"
-loop 5
-  aura remaining = cap 5 loopindex
-  rizz remaining
-endloop
-
-slay "Program completed successfully!"
 exit
 ```
 
