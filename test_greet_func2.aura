@@ -1,0 +1,7 @@
+bet greet(name, age)
+  vibes "Hello!"
+  vibes name
+  vibes age
+no-cap
+bet greet("Alice", 25)
+exit

@@ -1,0 +1,9 @@
+# Define function
+bet greet(name, age)
+  vibes "Hello!"
+  vibes name
+  vibes age
+no-cap
+
+# Call function
+bet greet("Alice", 25)

@@ -285,7 +285,9 @@ class AuraEsolang:
                 self.line_num += 1
                 continue
             self.log_execution(line)
-            self.exec_line(line)
+            result = self.exec_line(line)
+            if result == 'skip_increment':
+                continue
             self.line_num += 1
         execution_time = time.time() - self.execution_start_time
         print(f"\nProgram completed in {execution_time:.3f}s")
@@ -531,12 +533,15 @@ class AuraEsolang:
             pass
         
         elif cmd == 'bet':
+            # Function definition if next lines until 'no-cap', else function call
             is_def = False
+            # If next lines until 'no-cap', treat as definition
             if self.line_num + 1 < len(self.lines):
                 next_line = self.lines[self.line_num + 1]
-                if next_line.startswith(' ') or next_line.startswith('\t') or next_line.startswith('periodt') or next_line.startswith('vibes') or next_line.startswith('rizz') or next_line.startswith('aura') or next_line.startswith('gyatt') or next_line.startswith('maincharacter') or next_line.startswith('compliment') or next_line.startswith('motivation') or next_line.startswith('aesthetic') or next_line.startswith('exit') or next_line.startswith('no-cap'):
+                if not (next_line.startswith('bet') and '(' in next_line and ')' in next_line):
                     is_def = True
-            if is_def:
+            # If at end of file, treat as function call if not followed by indented block
+            if is_def and self.line_num + 1 < len(self.lines):
                 name = line.split('(',1)[0].split()[1]
                 params_str = line[line.index('(')+1:line.index(')')]
                 params = [p.strip() for p in params_str.split(',') if p.strip()]
@@ -546,9 +551,8 @@ class AuraEsolang:
                     body.append(self.lines[self.line_num])
                     self.line_num += 1
                 self.functions[name] = (params, body)
-                # Skip the 'no-cap' line so execution resumes after the function definition
                 self.line_num += 1
-                return
+                return 'skip_increment'
             else:
                 name = line.split('(',1)[0].split()[1]
                 args_str = line[line.index('(')+1:line.index(')')]
@@ -567,26 +571,57 @@ class AuraEsolang:
         
         elif cmd == 'betif':
             cond = self.eval_expr(' '.join(tokens[1:]))
+            self.line_num += 1
             if cond:
-                self.line_num += 1
                 while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nobet':
                     self.exec_line(self.lines[self.line_num])
                     self.line_num += 1
+                # After running betif block, skip to after nobet and also skip any following susif/nosus block
+                while self.line_num < len(self.lines):
+                    if self.lines[self.line_num] == 'nobet':
+                        self.line_num += 1
+                        break
+                    self.line_num += 1
+                # Skip any susif/nosus block that follows
+                while self.line_num < len(self.lines):
+                    if self.lines[self.line_num].startswith('susif'):
+                        # Skip susif block
+                        self.line_num += 1
+                        while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nosus':
+                            self.line_num += 1
+                        if self.line_num < len(self.lines) and self.lines[self.line_num] == 'nosus':
+                            self.line_num += 1
+                        continue
+                    break
+                return 'skip_increment'
             else:
-                self.line_num += 1
+                # Skip betif block
                 while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nobet':
                     self.line_num += 1
+                if self.line_num < len(self.lines) and self.lines[self.line_num] == 'nobet':
+                    self.line_num += 1
+                # Continue to next line (could be susif)
         elif cmd == 'susif':
             cond = self.eval_expr(' '.join(tokens[1:]))
+            self.line_num += 1
             if not cond:
-                self.line_num += 1
                 while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nosus':
                     self.exec_line(self.lines[self.line_num])
                     self.line_num += 1
+                # After running susif block, skip to after nosus
+                while self.line_num < len(self.lines):
+                    if self.lines[self.line_num] == 'nosus':
+                        self.line_num += 1
+                        break
+                    self.line_num += 1
+                return 'skip_increment'
             else:
-                self.line_num += 1
+                # Skip susif block
                 while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nosus':
                     self.line_num += 1
+                if self.line_num < len(self.lines) and self.lines[self.line_num] == 'nosus':
+                    self.line_num += 1
+                # Continue to next line
         elif cmd == 'no-cap' or cmd == 'nobet' or cmd == 'nosus':
             pass
         
@@ -624,10 +659,6 @@ class AuraEsolang:
             print("Current aura:")
             for k, v in self.vars.items():
                 if k != 'loopindex':
-                    print(f"  {k}: {v}")
-            if self.arrays:
-                print("Arrays:")
-                for k, v in self.arrays.items():
                     print(f"  {k}: {v}")
         elif cmd == 'maincharacter':
             name = tokens[1]
@@ -671,7 +702,6 @@ class AuraEsolang:
             filename = tokens[1] if len(tokens) > 1 else "aura_save.json"
             save_data = {
                 'vars': self.vars,
-                'arrays': self.arrays,
                 'main_character': self.main_character
             }
             with open(filename, 'w') as f:
@@ -683,7 +713,6 @@ class AuraEsolang:
                 with open(filename, 'r') as f:
                     save_data = json.load(f)
                 self.vars = save_data.get('vars', {})
-                self.arrays = save_data.get('arrays', {})
                 self.main_character = save_data.get('main_character')
                 print(f"State loaded from {filename}")
             except FileNotFoundError:
@@ -691,7 +720,6 @@ class AuraEsolang:
         elif cmd == 'clear':
             if len(tokens) > 1 and tokens[1] == 'all':
                 self.vars.clear()
-                self.arrays.clear()
                 self.main_character = None
                 print("All variables cleared")
             else:
