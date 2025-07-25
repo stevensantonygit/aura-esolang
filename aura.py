@@ -16,7 +16,7 @@ class AuraEsolang:
         self.line_num = 0
         self.call_stack = []
         self.main_character = None
-        self.arrays = {}
+        # Array support removed for simplicity
         self.debug_mode = False
         self.total_lines_executed = 0
         self.execution_start_time = None
@@ -240,20 +240,6 @@ class AuraEsolang:
             return datetime.now().minute
         elif tokens[0] == 'second':
             return datetime.now().second
-
-        elif tokens[0] == 'squadget':
-            arr_name = tokens[1]
-            index = self.get_value(tokens[2])
-            if arr_name in self.arrays and 0 <= index < len(self.arrays[arr_name]):
-                return self.arrays[arr_name][index]
-            else:
-                self.skill_issue(f"can't get index {index} from {arr_name}")
-        elif tokens[0] == 'squadlen':
-            arr_name = tokens[1]
-            if arr_name in self.arrays:
-                return len(self.arrays[arr_name])
-            else:
-                self.skill_issue(f"array {arr_name} not found")
         
         elif tokens[0].replace('.', '', 1).isdigit() or (tokens[0][0] == '-' and tokens[0][1:].replace('.', '', 1).isdigit()):
             return float(tokens[0]) if '.' in tokens[0] else int(tokens[0])
@@ -267,12 +253,9 @@ class AuraEsolang:
             return token[1:-1]
         if token.replace('.', '', 1).isdigit() or (token[0] == '-' and token[1:].replace('.', '', 1).isdigit()):
             return float(token) if '.' in token else int(token)
-        elif token in self.vars:
+        if token in self.vars:
             return self.vars[token]
-        elif token in self.arrays:
-            return self.arrays[token]
-        else:
-            self.skill_issue(f"undefined variable: {token}")
+        self.skill_issue(f"undefined variable: {token}")
 
     def skill_issue(self, msg):
         print(f"skill issue: {msg}")
@@ -290,12 +273,20 @@ class AuraEsolang:
         self.execution_start_time = time.time()
         self.parse(code)
         print("AURA interpreter starting...")
-        
+        for line in self.lines:
+            tokens = line.split()
+            if tokens and tokens[0] == 'squad' and len(tokens) > 2 and tokens[2] == '=':
+                self.exec_line(line)
+        self.line_num = 0
         while self.line_num < len(self.lines):
-            self.log_execution(self.lines[self.line_num])
-            self.exec_line(self.lines[self.line_num])
+            line = self.lines[self.line_num]
+            tokens = line.split()
+            if tokens and tokens[0] == 'squad' and len(tokens) > 2 and tokens[2] == '=':
+                self.line_num += 1
+                continue
+            self.log_execution(line)
+            self.exec_line(line)
             self.line_num += 1
-            
         execution_time = time.time() - self.execution_start_time
         print(f"\nProgram completed in {execution_time:.3f}s")
         print(f"Total lines executed: {self.total_lines_executed}")
@@ -323,28 +314,7 @@ class AuraEsolang:
             self.vars[name] = value
         
         elif cmd in [
-            'slay', 'periodt', 'vibes'
-        ]:
-            # Output commands: print all arguments joined by space, support arrays/vars
-            output_parts = []
-            for arg in tokens[1:]:
-                if arg in self.vars:
-                    output_parts.append(str(self.vars[arg]))
-                elif arg in self.arrays:
-                    output_parts.append(str(self.arrays[arg]))
-                elif arg.startswith('"') and arg.endswith('"'):
-                    output_parts.append(arg[1:-1])
-                else:
-                    output_parts.append(arg)
-            joined = ' '.join(output_parts)
-            if cmd == 'slay':
-                print(f"[SLAY] {joined}")
-            elif cmd == 'periodt':
-                print(f"[PERIODT] {joined}")
-            elif cmd == 'vibes':
-                print(f"[VIBES] {joined}")
-        elif cmd in [
-            'cap', 'drip', 'sus', 'mod', 'power',
+            'slay', 'cap', 'drip', 'sus', 'mod', 'power',
             'flex', 'shade', 'bigger', 'smaller', 'bigflex', 'smallflex',
             'and', 'or', 'not', 'min', 'max', 'ratio', 'simp', 'clout', 'cancel',
             'manifest', 'vibeflip', 'squad', 'glowup', 'spill', 'pause', 'trend',
@@ -353,13 +323,171 @@ class AuraEsolang:
             'length', 'concat', 'upper', 'lower', 'squadget', 'squadlen',
             'lit', 'false'
         ]:
-            arg = ' '.join(tokens[1:])
+            if len(tokens) > 1 and tokens[1].startswith('"') and tokens[1].endswith('"'):
+                output_parts = []
+                for arg in tokens[1:]:
+                    if arg in self.vars:
+                        output_parts.append(str(self.vars[arg]))
+                    # arrays removed
+                    elif arg.startswith('"') and arg.endswith('"'):
+                        output_parts.append(arg[1:-1])
+                    else:
+                        output_parts.append(arg)
+                joined = ' '.join(output_parts)
+                print(f"[{cmd.upper()}] {joined}")
+            else:
+                try:
+                    result = self.eval_expr(line)
+                    print(f"[{cmd.upper()}] {result}")
+                except Exception:
+                    self.skill_issue(f'cannot {cmd} {' '.join(tokens[1:])}')
+
+        elif cmd == 'dripcheck':
+            name = tokens[1]
+            val = self.vars.get(name, 0)
+            if val:
+                print(f"{name} got drip")
+            else:
+                print(f"{name} dry fr")
+        elif cmd == 'ghost':
+            name = tokens[1]
+            if self.main_character == name:
+                self.skill_issue(f"can't ghost the main character {name}")
+            if name in self.vars:
+                print(f"{name} has been ghosted")
+                del self.vars[name]
+            else:
+                self.skill_issue(f"can't ghost {name}, not found")
+        elif cmd == 'rizzup':
+            name = tokens[1]
+            if name in self.vars:
+                self.vars[name] += 1
+                print(f"{name} rizzed up to {self.vars[name]}")
+            else:
+                self.skill_issue(f"can't rizzup {name}, not found")
+        elif cmd == 'gyattdown':
+            name = tokens[1]
+            if name in self.vars:
+                self.vars[name] -= 1
+                print(f"{name} gyatt down to {self.vars[name]}")
+            else:
+                self.skill_issue(f"can't gyattdown {name}, not found")
+        elif cmd == 'vibecheck':
+            print("Current aura:")
+            for k, v in self.vars.items():
+                if k != 'loopindex':
+                    print(f"  {k}: {v}")
+            # arrays removed
+        elif cmd == 'maincharacter':
+            name = tokens[1]
+            self.main_character = name
+            print(f"{name} is now the main character!")
+        elif cmd == 'compliment':
+            phrase = random.choice(self.compliment_phrases)
+            print(f"{phrase}")
+        elif cmd == 'motivation':
+            motivational_quotes = [
+                "You're absolutely slaying today!",
+                "Main character energy activated!",
+                "You're literally glowing up!",
+                "That's iconic behavior!",
+                "You're living your best life!",
+                "Main character energy is immaculate!",
+                "You're the moment!",
+                "Your vibe is unmatched!",
+                "You're a certified gem!",
+                "You're absolutely sending me (in the best way)!"
+            ]
+            print(random.choice(motivational_quotes))
+        elif cmd == 'aesthetic':
+            aesthetics = [
+                "soft girl vibes",
+                "dark academia energy",
+                "beach day mood",
+                "cottagecore dreams",
+                "ethereal night vibes",
+                "edgy main character",
+                "rainbow unicorn energy",
+                "kawaii princess mode"
+            ]
+            print(random.choice(aesthetics))
+        elif cmd == 'debug':
+            self.debug_mode = not self.debug_mode
+            status = "ON" if self.debug_mode else "OFF"
+            print(f"Debug mode: {status}")
+        elif cmd == 'save':
+            filename = tokens[1] if len(tokens) > 1 else "aura_save.json"
+            save_data = {
+                'vars': self.vars,
+                'arrays': self.arrays,
+                'main_character': self.main_character
+            }
+            with open(filename, 'w') as f:
+                json.dump(save_data, f, indent=2)
+            print(f"State saved to {filename}")
+        elif cmd == 'load':
+            filename = tokens[1] if len(tokens) > 1 else "aura_save.json"
             try:
-                result = self.eval_expr(line)
-            except Exception:
-                self.skill_issue(f'cannot {cmd} {arg}')
-            if result is not None:
-                print(result)
+                with open(filename, 'r') as f:
+                    save_data = json.load(f)
+                self.vars = save_data.get('vars', {})
+                self.arrays = save_data.get('arrays', {})
+                self.main_character = save_data.get('main_character')
+                print(f"State loaded from {filename}")
+            except FileNotFoundError:
+                self.skill_issue(f"save file {filename} not found")
+        elif cmd == 'clear':
+            if len(tokens) > 1 and tokens[1] == 'all':
+                self.vars.clear()
+                self.arrays.clear()
+                self.main_character = None
+                print("All variables cleared")
+            else:
+                os.system('cls' if os.name == 'nt' else 'clear')
+        elif cmd == 'help':
+            print("AURA Commands:")
+            print("  aura/gyatt var = value - declare/assign variable")
+            print("  rizz/slay/periodt/vibes - output with style")
+            print("  vibe var - get input")
+            print("  loop n...endloop - basic loop")
+            print("  whileloop condition...endwhileloop - while loop")
+            print("  betif/susif condition - conditionals")
+            print("  bet func(params)...no-cap - define function")
+            print("  squad arr = [1,2,3] - create array")
+            print("  ghost var - delete variable")
+            print("  rizzup/gyattdown var - increment/decrement")
+            print("  vibecheck - show all variables")
+            print("  maincharacter var - set main character")
+            print("  compliment/motivation/aesthetic - random positivity")
+            print("  debug - toggle debug mode")
+            print("  save/load filename - save/load state")
+            print("  clear [all] - clear screen or variables")
+            print("  exit - quit program")
+        elif cmd == 'exit':
+            print('aura out! Thanks for vibing with us!')
+            sys.exit(0)
+        elif cmd == 'periodt':
+            output_parts = []
+            for arg in tokens[1:]:
+                if arg in self.vars:
+                    output_parts.append(str(self.vars[arg]))
+                elif arg.startswith('"') and arg.endswith('"'):
+                    output_parts.append(arg[1:-1])
+                else:
+                    output_parts.append(arg)
+            joined = ' '.join(output_parts)
+            print(f"[PERIODT] {joined}")
+        elif cmd == 'vibes':
+            output_parts = []
+            for arg in tokens[1:]:
+                if arg in self.vars:
+                    output_parts.append(str(self.vars[arg]))
+                elif arg.startswith('"') and arg.endswith('"'):
+                    output_parts.append(arg[1:-1])
+                else:
+                    output_parts.append(arg)
+            joined = ' '.join(output_parts)
+            print(f"[VIBES] {joined}")
         
         elif cmd == 'vibe':
             name = tokens[1]
@@ -375,20 +503,7 @@ class AuraEsolang:
             except Exception as e:
                 self.skill_issue(f'input fail: {e}')
         
-        elif cmd == 'squad':
-            # squad arr = [1,2,3] or squad arr = [a, b, 3]
-            name = tokens[1]
-            if tokens[2] != '=':
-                self.skill_issue('expected =')
-            arr_start = line.find('[')
-            arr_end = line.find(']')
-            if arr_start != -1 and arr_end != -1 and arr_end > arr_start:
-                array_str = line[arr_start+1:arr_end]
-                elements = [e.strip() for e in array_str.split(',') if e.strip()]
-                self.arrays[name] = [self.get_value(e) if e in self.vars else self.get_value(e) for e in elements]
-                print(f"[DEBUG] Arrays after squad: {self.arrays}")
-            else:
-                self.skill_issue('expected array format [1, 2, 3]')
+        # squad removed
         elif cmd == 'squadget':
             arr_name = tokens[1]
             index = self.get_value(tokens[2])

@@ -30,7 +30,6 @@
 
 - **Gen Z Syntax**: Keywords like `slay`, `bet`, `no-cap`, `vibes` and more
 - **Mathematical Operations**: Comprehensive math functions including square root, random numbers, and basic arithmetic
-- **Array Support**: Create and manipulate arrays with `squad` commands
 - **Functions**: Define and call custom functions with `bet` and `no-cap`
 - **Control Flow**: Loops, conditionals, and control structures
 - **Special Commands**: Built-in commands for motivation, compliments, and aesthetic output
@@ -90,10 +89,10 @@ maincharacter x      # Protect variable from deletion
 ### Output Commands
 ```aura
 vibes "Hello World!"      # Output with [VIBES] prefix
-slay "Hot content!"      # Output with [SLAY] prefix
 periodt "Statement!"     # Output with [PERIODT] prefix
 vibes "Good energy!"     # Output with [VIBES] prefix
 ```
+> **Note:** `slay` is only for addition (math). It does not print strings or act as an output command.
 
 ### Input
 ```aura
@@ -134,15 +133,7 @@ lit             # True (1)
 cap             # False (0)
 ```
 
-### Arrays (Squad Operations)
-```aura
-squad numbers = [1, 2, 3, 4, 5]    # Create array
-squadget numbers 0                  # Get element at index
-squadset numbers 0 10               # Set element at index
-squadpush numbers 6                 # Add element to end
-squadpop numbers                    # Remove last element
-squadlen numbers                    # Get array length
-```
+
 
 ### Control Flow
 
@@ -231,22 +222,7 @@ vibecheck
 exit
 ```
 
-### Arrays and Loops
-```aura
-squad numbers = [1, 2, 3, 4, 5]
-slay "Array contents:"
-vibes numbers
 
-slay "Processing elements:"
-loop 5
-  vibes "Index"
-  vibes loopindex
-  vibes ":"
-  vibes squadget numbers loopindex
-endloop
-
-exit
-```
 
 ### Functions
 ```aura
@@ -296,10 +272,7 @@ aura username = "CodeMaster"
 aura score = 0
 maincharacter username
 
-# Array operations
-squad achievements = ["First Program", "Loop Master", "Function Creator"]
-slay "Current achievements:"
-rizz achievements
+
 
 # Mathematical operations
 aura points = random 50 100
@@ -440,10 +413,9 @@ Get command reference
     "aura var = value": "Declare a variable",
     "gyatt var = value": "Assign to a variable"
   },
-  "output": {
-    "rizz value": "Basic output",
-    "slay value": "Output with [SLAY] prefix"
-  }
+    "output": {
+        "rizz value": "Basic output"
+    }
 }
 ```
 
@@ -514,10 +486,10 @@ When adding new AURA commands:
 - Check that port 5000 is available
 - Ensure `aura_web.py` and `web_editor.html` are in the same directory
 
+
 **Skill issue messages**
 - Enable debug mode for detailed error information
 - Check variable names and syntax
-- Verify that arrays are properly initialized before use
 
 **Performance issues**
 - Avoid infinite loops in `whileloop` constructs

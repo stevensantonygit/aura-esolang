@@ -1,0 +1,67 @@
+periodt "Testing output commands"
+periodt "Testing output commands"
+vibes "Testing vibes"
+aura x = 10
+aura y = 5
+maincharacter x
+periodt "Math ops"
+slay x y
+cap x y
+drip x y
+sus x y
+mod x y
+power x y
+periodt "Logic ops"
+flex x y
+shade x y
+bigger x y
+smaller x y
+bigflex x y
+smallflex x y
+and 1 0
+or 1 0
+not 0
+periodt "Other math ops"
+sqrt x
+abs -10
+floor 10.7
+ceil 10.2
+round 10.5
+sin 0
+cos 0
+tan 0
+log 1
+random 1 10
+min x y
+max x y
+length "hello"
+concat "he" "llo"
+upper "hello"
+lower "HELLO"
+
+periodt "Control flow"
+loop 2
+periodt "looping"
+endloop
+vibecheck
+periodt "Conditionals"
+betif flex x y
+periodt "betif true"
+nobet
+susif shade x y
+periodt "susif false"
+nosus
+periodt "Functions"
+bet add(a, b)
+slay a b
+no-cap
+bet add(2, 3)
+periodt "Special"
+compliment
+motivation
+aesthetic
+debug
+save test_save.json
+clear all
+load test_save.json
+exit
