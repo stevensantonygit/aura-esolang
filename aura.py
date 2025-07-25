@@ -573,10 +573,15 @@ class AuraEsolang:
             pass
         
         elif cmd == 'bet':
-            if '(' in line and ')' in line:
-                name = tokens[1]
-                params = line[line.index('(')+1:line.index(')')].split(',')
-                params = [p.strip() for p in params if p.strip()]
+            is_def = False
+            if self.line_num + 1 < len(self.lines):
+                next_line = self.lines[self.line_num + 1]
+                if next_line.startswith(' ') or next_line.startswith('\t') or next_line.startswith('periodt') or next_line.startswith('vibes') or next_line.startswith('rizz') or next_line.startswith('aura') or next_line.startswith('gyatt') or next_line.startswith('maincharacter') or next_line.startswith('compliment') or next_line.startswith('motivation') or next_line.startswith('aesthetic') or next_line.startswith('exit') or next_line.startswith('no-cap'):
+                    is_def = True
+            if is_def:
+                name = line.split('(',1)[0].split()[1]
+                params_str = line[line.index('(')+1:line.index(')')]
+                params = [p.strip() for p in params_str.split(',') if p.strip()]
                 body = []
                 self.line_num += 1
                 while self.line_num < len(self.lines) and self.lines[self.line_num] != 'no-cap':
@@ -584,9 +589,9 @@ class AuraEsolang:
                     self.line_num += 1
                 self.functions[name] = (params, body)
             else:
-                name = tokens[1]
-                args = line[line.index('(')+1:line.index(')')].split(',')
-                args = [a.strip() for a in args if a.strip()]
+                name = line.split('(',1)[0].split()[1]
+                args_str = line[line.index('(')+1:line.index(')')]
+                args = [a.strip() for a in args_str.split(',') if a.strip()]
                 if name not in self.functions:
                     self.skill_issue(f'no such function: {name}')
                 params, body = self.functions[name]
