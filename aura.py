@@ -377,7 +377,6 @@ class AuraEsolang:
             for k, v in self.vars.items():
                 if k != 'loopindex':
                     print(f"  {k}: {v}")
-            # arrays removed
         elif cmd == 'maincharacter':
             name = tokens[1]
             self.main_character = name
@@ -419,7 +418,6 @@ class AuraEsolang:
             filename = tokens[1] if len(tokens) > 1 else "aura_save.json"
             save_data = {
                 'vars': self.vars,
-                'arrays': self.arrays,
                 'main_character': self.main_character
             }
             with open(filename, 'w') as f:
@@ -431,7 +429,6 @@ class AuraEsolang:
                 with open(filename, 'r') as f:
                     save_data = json.load(f)
                 self.vars = save_data.get('vars', {})
-                self.arrays = save_data.get('arrays', {})
                 self.main_character = save_data.get('main_character')
                 print(f"State loaded from {filename}")
             except FileNotFoundError:
@@ -439,7 +436,6 @@ class AuraEsolang:
         elif cmd == 'clear':
             if len(tokens) > 1 and tokens[1] == 'all':
                 self.vars.clear()
-                self.arrays.clear()
                 self.main_character = None
                 print("All variables cleared")
             else:
@@ -453,7 +449,6 @@ class AuraEsolang:
             print("  whileloop condition...endwhileloop - while loop")
             print("  betif/susif condition - conditionals")
             print("  bet func(params)...no-cap - define function")
-            print("  squad arr = [1,2,3] - create array")
             print("  ghost var - delete variable")
             print("  rizzup/gyattdown var - increment/decrement")
             print("  vibecheck - show all variables")
@@ -507,43 +502,6 @@ class AuraEsolang:
             except Exception as e:
                 self.skill_issue(f'input fail: {e}')
         
-        elif cmd == 'squadget':
-            arr_name = tokens[1]
-            index = self.get_value(tokens[2])
-            if arr_name in self.arrays and 0 <= index < len(self.arrays[arr_name]):
-                print(self.arrays[arr_name][index])
-            else:
-                self.skill_issue(f"can't get index {index} from {arr_name}")
-        elif cmd == 'squadset':
-            arr_name = tokens[1]
-            index = self.get_value(tokens[2])
-            value = self.get_value(tokens[3])
-            if arr_name in self.arrays and 0 <= index < len(self.arrays[arr_name]):
-                self.arrays[arr_name][index] = value
-                print(f"{arr_name}[{index}] set to {value}")
-            else:
-                self.skill_issue(f"can't set index {index} in {arr_name}")
-        elif cmd == 'squadpush':
-            arr_name = tokens[1]
-            value = self.get_value(tokens[2])
-            if arr_name in self.arrays:
-                self.arrays[arr_name].append(value)
-                print(f"{value} pushed to {arr_name}")
-            else:
-                self.skill_issue(f"array {arr_name} not found")
-        elif cmd == 'squadpop':
-            arr_name = tokens[1]
-            if arr_name in self.arrays and self.arrays[arr_name]:
-                val = self.arrays[arr_name].pop()
-                print(f"{val} popped from {arr_name}")
-            else:
-                self.skill_issue(f"can't pop from {arr_name}")
-        elif cmd == 'squadlen':
-            arr_name = tokens[1]
-            if arr_name in self.arrays:
-                print(len(self.arrays[arr_name]))
-            else:
-                self.skill_issue(f"array {arr_name} not found")
         
         elif cmd == 'loop':
             count = self.get_value(tokens[1])
@@ -588,6 +546,9 @@ class AuraEsolang:
                     body.append(self.lines[self.line_num])
                     self.line_num += 1
                 self.functions[name] = (params, body)
+                # Skip the 'no-cap' line so execution resumes after the function definition
+                self.line_num += 1
+                return
             else:
                 name = line.split('(',1)[0].split()[1]
                 args_str = line[line.index('(')+1:line.index(')')]
