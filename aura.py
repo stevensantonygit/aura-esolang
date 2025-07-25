@@ -466,28 +466,32 @@ class AuraEsolang:
         elif cmd == 'exit':
             print('aura out! Thanks for vibing with us!')
             sys.exit(0)
-        elif cmd == 'periodt':
-            output_parts = []
-            for arg in tokens[1:]:
-                if arg in self.vars:
-                    output_parts.append(str(self.vars[arg]))
-                elif arg.startswith('"') and arg.endswith('"'):
-                    output_parts.append(arg[1:-1])
-                else:
-                    output_parts.append(arg)
-            joined = ' '.join(output_parts)
-            print(f"[PERIODT] {joined}")
-        elif cmd == 'vibes':
-            output_parts = []
-            for arg in tokens[1:]:
-                if arg in self.vars:
-                    output_parts.append(str(self.vars[arg]))
-                elif arg.startswith('"') and arg.endswith('"'):
-                    output_parts.append(arg[1:-1])
-                else:
-                    output_parts.append(arg)
-            joined = ' '.join(output_parts)
-            print(f"[VIBES] {joined}")
+
+        elif cmd in ['vibes', 'periodt', 'rizz']:
+            if len(tokens) > 1 and tokens[1] in [
+                'slay', 'cap', 'drip', 'sus', 'mod', 'power',
+                'flex', 'shade', 'bigger', 'smaller', 'bigflex', 'smallflex',
+                'and', 'or', 'not', 'min', 'max', 'ratio', 'simp', 'clout', 'cancel',
+                'manifest', 'vibeflip', 'squad', 'glowup', 'spill', 'pause', 'trend',
+                'time', 'year', 'month', 'day', 'hour', 'minute', 'second',
+                'sqrt', 'abs', 'floor', 'ceil', 'round', 'sin', 'cos', 'tan', 'log', 'random',
+                'length', 'concat', 'upper', 'lower', 'lit', 'false']:
+                try:
+                    result = self.eval_expr(' '.join(tokens[1:]))
+                    print(f"[{cmd.upper()}] {result}")
+                except Exception:
+                    self.skill_issue(f'cannot {cmd} {' '.join(tokens[1:])}')
+            else:
+                output_parts = []
+                for arg in tokens[1:]:
+                    if arg in self.vars:
+                        output_parts.append(str(self.vars[arg]))
+                    elif arg.startswith('"') and arg.endswith('"'):
+                        output_parts.append(arg[1:-1])
+                    else:
+                        output_parts.append(arg)
+                joined = ' '.join(output_parts)
+                print(f"[{cmd.upper()}] {joined}")
         
         elif cmd == 'vibe':
             name = tokens[1]
@@ -503,7 +507,6 @@ class AuraEsolang:
             except Exception as e:
                 self.skill_issue(f'input fail: {e}')
         
-        # squad removed
         elif cmd == 'squadget':
             arr_name = tokens[1]
             index = self.get_value(tokens[2])
@@ -684,7 +687,7 @@ class AuraEsolang:
             print(random.choice(motivational_quotes))
         elif cmd == 'aesthetic':
             aesthetics = [
-                "soft girl vibes",
+                "vibes",
                 "dark academia energy",
                 "beach day mood",
                 "cottagecore dreams",
