@@ -55,122 +55,115 @@ pip install flask
 python aura.py --version
 ```
 
-### Running AURA Programs
+### Example Programs
 
-#### Command Line Interface
-```bash
-# Run an AURA program
-python aura.py example.aura
-
-# Run with debug mode for detailed output
-python aura.py example.aura --debug
-
-# Show version information
-python aura.py --version
-```
-
-#### Web Editor
-```bash
-# Start the web server
-python aura_web.py
-
-# Open your browser to http://localhost:5000
-```
-
-## Language Reference
-
-### Variables and Assignment
+#### Hello World
 ```aura
-aura x = 10          # Declare and initialize variable
-gyatt y = 20         # Assign value to variable
-maincharacter x      # Protect variable from deletion
+vibes "Hello World!"
+periodt "Welcome to AURA!"
+motivation
+exit
 ```
 
-### Output Commands
+#### Math Operations
 ```aura
-vibes "Hello World!"      # Output with [VIBES] prefix
-periodt "Statement!"     # Output with [PERIODT] prefix
-vibes "Good energy!"     # Output with [VIBES] prefix
-```
-> **Note:** `slay` is only for addition (math). It does not print strings or act as an output command.
+aura x = 10
+aura y = 5
+maincharacter x
 
-### Input
-```aura
-vibe name               # Get user input and store in variable
-```
-
-### Mathematical Operations
-```aura
-slay a b        # Addition (a + b)
-cap a b         # Subtraction (a - b)
-drip a b        # Multiplication (a * b)
-sus a b         # Division (a / b)
-mod a b         # Modulo (a % b)
-power a b       # Power (a ^ b)
-sqrt n          # Square root
-abs n           # Absolute value
-random a b      # Random number between a and b
-min a b         # Minimum of two values
-max a b         # Maximum of two values
+periodt "Math Operations:"
+vibes slay x y    # Addition: 15
+vibes cap x y     # Subtraction: 5
+vibes drip x y    # Multiplication: 50
+vibes sus x y     # Division: 2
+exit
 ```
 
-### Comparison Operators
+#### Functions
 ```aura
-flex a b        # Equal (a == b)
-shade a b       # Not equal (a != b)
-bigger a b      # Greater than (a > b)
-smaller a b     # Less than (a < b)
-bigflex a b     # Greater or equal (a >= b)
-smallflex a b   # Less or equal (a <= b)
+bet greet(name)
+  periodt "Hello there,"
+  vibes name
+  periodt "Welcome to AURA!"
+no-cap
+
+bet calculate(a, b)
+  aura result = slay a b
+  periodt "Result:"
+  vibes result
+no-cap
+
+# Function calls
+bet greet("AURA User")
+bet calculate(10, 5)
+exit
 ```
 
-### Logical Operators
+#### Conditionals and Logic
 ```aura
-and a b         # Logical AND
-or a b          # Logical OR
-not a           # Logical NOT
-lit             # True (1)
-cap             # False (0)
-```
+aura age = 18
+aura name = "Alex"
 
-
-
-### Control Flow
-
-#### Loops
-```aura
-# Basic loop with counter
-loop 5
-  vibes "Hello!"
-  vibes loopindex    # Built-in loop counter (0-based)
-endloop
-
-# While loop
-aura x = 0
-whileloop smaller x 5
-  vibes x
-  rizzup x
-endwhileloop
-```
-
-#### Conditionals
-```aura
-# If statement
-betif bigger x 10
-  vibes "x is big!"
+vibes "Age verification:"
+betif bigflex age 18
+  periodt "Access granted!"
 nobet
 
-# If not statement
-susif flex x 0
-  vibes "x is not zero!"
+susif smaller age 13
+  periodt "Too young for this content"
 nosus
+
+vibecheck
+exit
 ```
 
+#### Complete Example
+```aura
+# Complete AURA program demonstration
+vibes "Welcome to AURA Programming Language"
+
+# Variable declarations
+aura username = "CodeMaster"
+aura score = 0
+maincharacter username
+
+# Mathematical operations
+aura points = random 50 100
+aura bonus = drip points 2
+gyatt score = slay score points bonus
+
+# Conditional logic
+betif bigger score 200
+  periodt "High score achieved!"
+  compliment
+nobet
+
+# Function definition
+bet displayStats(user, points)
+  periodt "Player Stats:"
+  rizz user
+  rizz points
+  aesthetic
+no-cap
+
+# Function call
+bet displayStats(username, score)
+
+# Loop demonstration
+periodt "Countdown:"
+loop 5
+  aura remaining = cap 5 loopindex
+  rizz remaining
+endloop
+
+periodt "Program completed successfully!"
+exit
+```
 ### Functions
 ```aura
 # Define function
 bet greet(name, age)
-  slay "Hello!"
+  vibes "Hello!"
   vibes name
   vibes age
 no-cap
@@ -200,24 +193,24 @@ exit                # Quit program
 
 ### Hello World
 ```aura
-slay "Hello World!"
+vibes "Hello World!"
 periodt "Welcome to AURA!"
 motivation
 exit
-```
-
-### Variables and Math
+vibes drip x y    # Multiplication: 50
 ```aura
 aura x = 10
 aura y = 5
 maincharacter x
 
-slay "Math Operations:"
+periodt "Math Operations:"
 vibes slay x y    # Addition: 15
 vibes cap x y     # Subtraction: 5
 vibes drip x y    # Multiplication: 50
 vibes sus x y     # Division: 2
 
+
+exit
 vibecheck
 exit
 ```
@@ -225,17 +218,18 @@ exit
 
 
 ### Functions
+bet calculate(a, b)
 ```aura
 bet greet(name)
-  slay "Hello there,"
+  periodt "Hello there,"
   vibes name
   periodt "Welcome to AURA!"
 no-cap
 
 bet calculate(a, b)
   aura result = slay a b
-  rizz "Result:"
-  rizz result
+  periodt "Result:"
+  vibes result
 no-cap
 
 # Function calls
@@ -330,7 +324,6 @@ The AURA Web Editor provides a modern, interactive development environment with 
 - **Hello World**: Basic AURA greeting and output
 - **Variables Demo**: Working with variables and assignments
 - **Math Operations**: Mathematical functions and calculations
-- **Squad Operations**: Array creation and manipulation
 
 ## Error Handling
 
@@ -340,7 +333,7 @@ AURA uses a consistent error reporting system with "skill issue" messages:
 skill issue: undefined variable: x
 skill issue: can't sus by zero
 skill issue: expected =
-skill issue: array numbers not found
+    # (No array errors in new version)
 ```
 
 ### Debug Mode
@@ -493,8 +486,7 @@ When adding new AURA commands:
 
 **Performance issues**
 - Avoid infinite loops in `whileloop` constructs
-- Use reasonable array sizes for better performance
-- Consider using debug mode only when needed
+    - Consider using debug mode only when needed
 
 ### Getting Help
 - Check the built-in help: Add `help` to your AURA program
