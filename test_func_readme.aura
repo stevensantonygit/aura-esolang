@@ -1,0 +1,16 @@
+bet greet(name)
+  periodt "Hello there,"
+  vibes name
+  periodt "Welcome to AURA!"
+no-cap
+
+bet calculate(a, b)
+  aura result = slay a b
+  periodt "Result:"
+  vibes result
+no-cap
+
+# Function calls
+bet greet("AURA User")
+bet calculate(10, 5)
+exit

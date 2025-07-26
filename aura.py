@@ -1,52 +1,34 @@
-# AURA: The Gen Z Esolang
-
-import sys
-import time
-import random
 import math
-import os
+import random
+import time
+import sys
 import json
+import os
 from datetime import datetime
 
-class AuraEsolang:
+# AURA: The Gen Z Esolang
+
+class AuraInterpreter:
+    def exec_line(self, line):
+        tokens = line.split()
+        if not tokens:
+            return
+        cmd = tokens[0]
+        if cmd == 'aura' and len(tokens) >= 4 and tokens[2] == '=':
+            var = tokens[1]
+            expr = ' '.join(tokens[3:])
+            self.vars[var] = self.eval_expr(expr)
+            return
     def __init__(self):
         self.vars = {}
         self.functions = {}
         self.lines = []
         self.line_num = 0
-        self.call_stack = []
-        self.main_character = None
-        # Array support removed for simplicity
-        self.debug_mode = False
         self.total_lines_executed = 0
+        self.main_character = None
+        self.debug_mode = False
         self.execution_start_time = None
-        self.trend_phrases = [
-            "is trending rn!",
-            "just went viral!",
-            "is a whole mood!",
-            "is lowkey iconic!",
-            "is giving main character energy!",
-            "is a certified slay!",
-            "is on the FYP!",
-            "is a vibe!",
-            "is not mid!",
-            "is bussin'!",
-            "is absolutely sending me!",
-            "is giving main character energy!",
-            "is a certified moment!",
-            "is living rent-free in my head!",
-            "is the main character fr!",
-            "is not it chief!",
-            "is lowkey bussin!",
-            "is giving me life!",
-            "is the vibe we needed!",
-            "is absolutely iconic!"
-        ]
         self.compliment_phrases = [
-            "You're doing amazing!",
-            "Period!",
-            "That's bussin!",
-            "Absolutely slaying!",
             "You're the main character!",
             "Living your best life!",
             "That's iconic behavior!",
@@ -302,55 +284,69 @@ class AuraEsolang:
             return
         cmd = tokens[0]
         
-        if cmd == 'aura':
-            name = tokens[1]
-            if tokens[2] != '=':
-                self.skill_issue('expected =')
-            value = self.eval_expr(' '.join(tokens[3:]))
-            self.vars[name] = value
-        elif cmd == 'gyatt':
-            name = tokens[1]
-            if tokens[2] != '=':
-                self.skill_issue('expected =')
-            value = self.eval_expr(' '.join(tokens[3:]))
-            self.vars[name] = value
-        
-        elif cmd in [
-            'slay', 'cap', 'drip', 'sus', 'mod', 'power',
-            'flex', 'shade', 'bigger', 'smaller', 'bigflex', 'smallflex',
-            'and', 'or', 'not', 'min', 'max', 'ratio', 'simp', 'clout', 'cancel',
-            'manifest', 'vibeflip', 'squad', 'glowup', 'spill', 'pause', 'trend',
-            'time', 'year', 'month', 'day', 'hour', 'minute', 'second',
-            'sqrt', 'abs', 'floor', 'ceil', 'round', 'sin', 'cos', 'tan', 'log', 'random',
-            'length', 'concat', 'upper', 'lower', 'squadget', 'squadlen',
-            'lit', 'false'
-        ]:
-            if len(tokens) > 1 and tokens[1].startswith('"') and tokens[1].endswith('"'):
-                output_parts = []
-                for arg in tokens[1:]:
-                    if arg in self.vars:
-                        output_parts.append(str(self.vars[arg]))
-                    # arrays removed
-                    elif arg.startswith('"') and arg.endswith('"'):
-                        output_parts.append(arg[1:-1])
+        if cmd == 'aura' and len(tokens) >= 4 and tokens[2] == '=':
+            var = tokens[1]
+            expr = ' '.join(tokens[3:])
+            self.vars[var] = self.eval_expr(expr)
+            return
+        if cmd == 'bet':
+            name = line.split('(',1)[0].split()[1]
+            if name in self.functions and '(' in line and ')' in line:
+                args_str = line[line.index('(')+1:line.index(')')]
+                args = [a.strip() for a in args_str.split(',') if a.strip()]
+                params, body = self.functions[name]
+                if len(params) != len(args):
+                    self.skill_issue('argument count mismatch')
+                old_vars = self.vars.copy()
+                for p, a in zip(params, args):
+                    if a.startswith('"') and a.endswith('"'):
+                        self.vars[p] = a[1:-1]
+                    elif a.replace('.', '', 1).isdigit() or (a.startswith('-') and a[1:].replace('.', '', 1).isdigit()):
+                        self.vars[p] = float(a) if '.' in a else int(a)
                     else:
-                        output_parts.append(arg)
-                joined = ' '.join(output_parts)
-                print(f"[{cmd.upper()}] {joined}")
-            else:
-                try:
-                    result = self.eval_expr(line)
-                    print(f"[{cmd.upper()}] {result}")
-                except Exception:
-                    self.skill_issue(f'cannot {cmd} {' '.join(tokens[1:])}')
-
-        elif cmd == 'dripcheck':
-            name = tokens[1]
-            val = self.vars.get(name, 0)
-            if val:
-                print(f"{name} got drip")
-            else:
-                print(f"{name} dry fr")
+                        self.vars[p] = self.get_value(a)
+                for bline in body:
+                    self.exec_line(bline)
+                self.vars = old_vars
+                return
+            is_def = False
+            if self.line_num + 1 < len(self.lines):
+                next_line = self.lines[self.line_num + 1]
+                if not (next_line.startswith('bet') and '(' in next_line and ')' in next_line):
+                    is_def = True
+            if is_def:
+                params_str = line[line.index('(')+1:line.index(')')]
+                params = [p.strip() for p in params_str.split(',') if p.strip()]
+                body = []
+                self.line_num += 1
+                while self.line_num < len(self.lines) and self.lines[self.line_num] != 'no-cap':
+                    body.append(self.lines[self.line_num])
+                    self.line_num += 1
+                self.functions[name] = (params, body)
+                if self.line_num < len(self.lines) and self.lines[self.line_num] == 'no-cap':
+                    self.line_num += 1
+                return 'skip_increment'
+                name = line.split('(',1)[0].split()[1]
+                args_str = line[line.index('(')+1:line.index(')')]
+                args = [a.strip() for a in args_str.split(',') if a.strip()]
+                print(f"DEBUG: calling function '{name}' with args {args}")
+                if name not in self.functions:
+                    self.skill_issue(f'no such function: {name}')
+                params, body = self.functions[name]
+                if len(params) != len(args):
+                    self.skill_issue('argument count mismatch')
+                old_vars = self.vars.copy()
+                for p, a in zip(params, args):
+                    if a.startswith('"') and a.endswith('"'):
+                        self.vars[p] = a[1:-1]
+                    elif a.replace('.', '', 1).isdigit() or (a.startswith('-') and a[1:].replace('.', '', 1).isdigit()):
+                        self.vars[p] = float(a) if '.' in a else int(a)
+                    else:
+                        self.vars[p] = self.get_value(a)
+                for bline in body:
+                    print(f"DEBUG: executing in function '{name}': {bline}")
+                    self.exec_line(bline)
+                self.vars = old_vars
         elif cmd == 'ghost':
             name = tokens[1]
             if self.main_character == name:
@@ -533,14 +529,11 @@ class AuraEsolang:
             pass
         
         elif cmd == 'bet':
-            # Function definition if next lines until 'no-cap', else function call
             is_def = False
-            # If next lines until 'no-cap', treat as definition
             if self.line_num + 1 < len(self.lines):
                 next_line = self.lines[self.line_num + 1]
                 if not (next_line.startswith('bet') and '(' in next_line and ')' in next_line):
                     is_def = True
-            # If at end of file, treat as function call if not followed by indented block
             if is_def and self.line_num + 1 < len(self.lines):
                 name = line.split('(',1)[0].split()[1]
                 params_str = line[line.index('(')+1:line.index(')')]
@@ -551,9 +544,9 @@ class AuraEsolang:
                     body.append(self.lines[self.line_num])
                     self.line_num += 1
                 self.functions[name] = (params, body)
-                self.line_num += 1
-                return 'skip_increment'
-            else:
+                if self.line_num < len(self.lines) and self.lines[self.line_num] == 'no-cap':
+                    pass
+            elif '(' in line and ')' in line:
                 name = line.split('(',1)[0].split()[1]
                 args_str = line[line.index('(')+1:line.index(')')]
                 args = [a.strip() for a in args_str.split(',') if a.strip()]
@@ -564,8 +557,15 @@ class AuraEsolang:
                     self.skill_issue('argument count mismatch')
                 old_vars = self.vars.copy()
                 for p, a in zip(params, args):
-                    self.vars[p] = self.get_value(a)
+                    if a.startswith('"') and a.endswith('"'):
+                        self.vars[p] = a[1:-1]
+                    elif a.replace('.', '', 1).isdigit() or (a.startswith('-') and a[1:].replace('.', '', 1).isdigit()):
+                        self.vars[p] = float(a) if '.' in a else int(a)
+                    else:
+                        self.vars[p] = self.get_value(a)
+                print(f"DEBUG: vars after param assignment: {self.vars}")
                 for bline in body:
+                    print(f"DEBUG: vars before '{bline}': {self.vars}")
                     self.exec_line(bline)
                 self.vars = old_vars
         
@@ -576,16 +576,13 @@ class AuraEsolang:
                 while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nobet':
                     self.exec_line(self.lines[self.line_num])
                     self.line_num += 1
-                # After running betif block, skip to after nobet and also skip any following susif/nosus block
                 while self.line_num < len(self.lines):
                     if self.lines[self.line_num] == 'nobet':
                         self.line_num += 1
                         break
                     self.line_num += 1
-                # Skip any susif/nosus block that follows
                 while self.line_num < len(self.lines):
                     if self.lines[self.line_num].startswith('susif'):
-                        # Skip susif block
                         self.line_num += 1
                         while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nosus':
                             self.line_num += 1
@@ -595,12 +592,10 @@ class AuraEsolang:
                     break
                 return 'skip_increment'
             else:
-                # Skip betif block
                 while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nobet':
                     self.line_num += 1
                 if self.line_num < len(self.lines) and self.lines[self.line_num] == 'nobet':
                     self.line_num += 1
-                # Continue to next line (could be susif)
         elif cmd == 'susif':
             cond = self.eval_expr(' '.join(tokens[1:]))
             self.line_num += 1
@@ -608,7 +603,6 @@ class AuraEsolang:
                 while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nosus':
                     self.exec_line(self.lines[self.line_num])
                     self.line_num += 1
-                # After running susif block, skip to after nosus
                 while self.line_num < len(self.lines):
                     if self.lines[self.line_num] == 'nosus':
                         self.line_num += 1
@@ -616,12 +610,10 @@ class AuraEsolang:
                     self.line_num += 1
                 return 'skip_increment'
             else:
-                # Skip susif block
                 while self.line_num < len(self.lines) and self.lines[self.line_num] != 'nosus':
                     self.line_num += 1
                 if self.line_num < len(self.lines) and self.lines[self.line_num] == 'nosus':
                     self.line_num += 1
-                # Continue to next line
         elif cmd == 'no-cap' or cmd == 'nobet' or cmd == 'nosus':
             pass
         
@@ -796,7 +788,7 @@ if __name__ == '__main__':
     try:
         with open(args.file, 'r', encoding='utf-8') as f:
             code = f.read()
-        interpreter = AuraEsolang()
+        interpreter = AuraInterpreter()
         if args.debug:
             interpreter.debug_mode = True
         interpreter.run(code)
