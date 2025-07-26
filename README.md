@@ -22,64 +22,78 @@
 ╚═╝     ╚═╝╚══════╝╚══════╝   ╚═╝   ╚══════╝     ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
 ```
 
+
+<div align="center">
+<pre>
+ █████╗ ██╗   ██╗██████╗  █████╗ 
+██╔══██╗██║   ██║██╔══██╗██╔══██╗
+███████║██║   ██║██████╔╝███████║
+██╔══██║██║   ██║██╔══██╗██╔══██║
+██║  ██║╚██████╔╝██║  ██║██║  ██║
+╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+</pre>
+<h1>AURA Programming Language</h1>
+<b>Where Gen Z meets code. No cap, this language is absolutely iconic!</b>
+</div>
+
 # AURA Programming Language
 
 **AURA** is a Gen Z-inspired esoteric programming language that combines modern internet culture with programming concepts. Every keyword is designed to reflect contemporary slang and expressions, making coding both fun and expressive.
 
+---
+
 ## Features
 
-- **Gen Z Syntax**: Keywords like `slay`, `bet`, `no-cap`, `vibes` and more
-- **Mathematical Operations**: Comprehensive math functions including square root, random numbers, and basic arithmetic
+- **Gen Z Syntax**: Keywords like `slay`, `bet`, `no-cap`, `vibes`, `gyatt`, `rizz`, and more
+- **Math Operations**: Modern math with `slay`, `cap`, `drip`, `sus`, `power`, `random`, etc.
 - **Functions**: Define and call custom functions with `bet` and `no-cap`
-- **Control Flow**: Loops, conditionals, and control structures
-- **Special Commands**: Built-in commands for motivation, compliments, and aesthetic output
+- **Control Flow**: Loops (`loop`), conditionals (`betif`, `susif`), and more
+- **Special Commands**: Built-in for motivation, compliments, and aesthetics
 - **Web Editor**: Modern web interface with syntax highlighting and live examples
 - **Debug Mode**: Enhanced error reporting and execution tracking
 - **Cross-Platform**: Works on Windows, macOS, and Linux
 
-## Installation and Setup
+---
+
+## Quick Start
 
 ### Requirements
 - Python 3.7 or higher
-- Flask (for web editor functionality)
+- Flask (for web editor)
 
 ### Installation
 ```bash
+git clone <repository-url>
+cd aura-esolang
+pip install flask  # Optional, for web editor
+python aura.py --version
+```
+
+---
+
+## Example Programs
+
+### Hello World
+```aura
+vibes "Hello World!"
+periodt "Welcome to AURA!"
 # Clone or download the project
+exit
+```
+### Math Operations
+```aura
+aura x = 10
 cd aura-esolang
 
 # Install dependencies (optional, for web editor)
 pip install flask
 
 # Verify installation
-python aura.py --version
+
+vibecheck
 ```
 
-### Example Programs
-
-#### Hello World
-```aura
-vibes "Hello World!"
-periodt "Welcome to AURA!"
-motivation
-exit
-```
-
-#### Math Operations
-```aura
-aura x = 10
-aura y = 5
-maincharacter x
-
-periodt "Math Operations:"
-vibes slay x y    # Addition: 15
-vibes cap x y     # Subtraction: 5
-vibes drip x y    # Multiplication: 50
-vibes sus x y     # Division: 2
-exit
-```
-
-#### Functions
+### Functions
 ```aura
 bet greet(name)
   periodt "Hello there,"
@@ -99,25 +113,6 @@ bet calculate(10, 5)
 exit
 ```
 
-#### Conditionals and Logic
-```aura
-aura age = 18
-aura name = "Alex"
-
-vibes "Age verification:"
-betif bigflex age 18
-  periodt "Access granted!"
-nobet
-
-susif smaller age 13
-  periodt "Too young for this content"
-nosus
-
-vibecheck
-exit
-```
-
-#### Complete Example
 ```aura
 # Complete AURA program demonstration
 vibes "Welcome to AURA Programming Language"
@@ -125,34 +120,127 @@ vibes "Welcome to AURA Programming Language"
 # Variable declarations
 aura username = "CodeMaster"
 aura score = 0
+```
+
+### Complete Example
+```aura
+# Complete AURA program demonstration
+vibes "Welcome to AURA Programming Language"
+
 maincharacter username
 
 # Mathematical operations
+
 aura points = random 50 100
 aura bonus = drip points 2
 gyatt score = slay score points bonus
 
+
 # Conditional logic
 betif bigger score 200
   periodt "High score achieved!"
+
   compliment
 nobet
 
 # Function definition
 bet displayStats(user, points)
   periodt "Player Stats:"
+
   rizz user
+
   rizz points
   aesthetic
 no-cap
 
 # Function call
+
 bet displayStats(username, score)
 
+```
+
+---
+
+## Command Reference
+
+### Variable Assignment
+- `aura var = value` — Declare a variable
+- `gyatt var = value` — Assign to a variable
+
+### Output
+- `vibes value` — Output with style
+- `periodt value` — Output with periodt energy
+- `rizz value` — Output with rizz
+
+### Math
+- `slay a b` — Addition
+- `cap a b` — Subtraction
+- `drip a b` — Multiplication
+- `sus a b` — Division
+- `mod a b` — Modulo
+- `power a b` — Exponentiation
+- `random a b` — Random integer between a and b
+
+### Functions
+- `bet name(params)` ... `no-cap` — Define a function
+- `bet name(args)` — Call a function
+
+### Control Flow
+- `loop n` ... `endloop` — Loop n times
+- `betif condition` ... `nobet` — If block
+- `susif condition` ... `nosus` — Else-if block
+
+### Variable Operations
+- `rizzup x` — Increment variable (x++)
+- `gyattdown x` — Decrement variable (x--)
+- `ghost x` — Delete variable
+- `vibecheck` — Show all variables
+
+### Special Commands
+- `compliment` — Display random compliment
+- `motivation` — Display motivational quote
+- `aesthetic` — Display aesthetic message
+- `help` — Show help information
+- `exit` — Quit program
+
+---
+
+## Web Editor
+
+The AURA Web Editor provides a modern, interactive development environment with:
+- Syntax highlighting
+- Live examples
+- Interactive execution
+- Error reporting
+- Line numbers
+- Responsive design
+
+Start with:
+```bash
+python aura_web.py
+```
+Then open [http://localhost:5000](http://localhost:5000)
+---
+
+## Error Handling
+
+AURA uses a consistent error reporting system with "skill issue" messages:
+```
 # Loop demonstration
 periodt "Countdown:"
 loop 5
   aura remaining = cap 5 loopindex
+
+Enable debug mode for detailed execution information:
+```bash
+python aura.py example.aura --debug
+```
+
+---
+
+## Project Structure
+
+```
   rizz remaining
 endloop
 
@@ -162,6 +250,32 @@ exit
 ### Functions
 ```aura
 # Define function
+
+---
+
+## License
+
+MIT License
+
+Copyright (c) 2025 AURA Development Team
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 bet greet(name, age)
   vibes "Hello!"
   vibes name

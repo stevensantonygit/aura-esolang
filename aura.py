@@ -14,7 +14,7 @@ class AuraInterpreter:
         if not tokens:
             return
         cmd = tokens[0]
-        if cmd == 'aura' and len(tokens) >= 4 and tokens[2] == '=':
+        if cmd in ('aura', 'gyatt') and len(tokens) >= 4 and tokens[2] == '=':
             var = tokens[1]
             expr = ' '.join(tokens[3:])
             self.vars[var] = self.eval_expr(expr)
@@ -284,7 +284,7 @@ class AuraInterpreter:
             return
         cmd = tokens[0]
         
-        if cmd == 'aura' and len(tokens) >= 4 and tokens[2] == '=':
+        if cmd in ('aura', 'gyatt') and len(tokens) >= 4 and tokens[2] == '=':
             var = tokens[1]
             expr = ' '.join(tokens[3:])
             self.vars[var] = self.eval_expr(expr)
@@ -477,6 +477,7 @@ class AuraInterpreter:
             else:
                 output_parts = []
                 for arg in tokens[1:]:
+                    # Always output the value of a variable if it exists
                     if arg in self.vars:
                         output_parts.append(str(self.vars[arg]))
                     elif arg.startswith('"') and arg.endswith('"'):

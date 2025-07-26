@@ -572,19 +572,7 @@
           <textarea 
             class="code-editor" 
             id="codeEditor" 
-            placeholder="aura message = 'Hello, World!'
-slay message
-
-aura count = 5
-loop count
-  vibes 'Iteration: ' + loopindex
-endloop
-
-bet greet(name)
-  slay 'Hello, ' + name + '!'
-no-cap
-
-bet greet('AURA Developer')"
+            placeholder="Write your AURA code here..."
             spellcheck="false"
           ></textarea>
         </div>
@@ -634,40 +622,55 @@ Performance: Ready</div>
     </div>
   </div>
 
-  <div class="modal" id="documentationModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">AURA Language Documentation</div>
-        <button class="modal-close" onclick="closeModal()">
-          <i class="fas fa-times"></i>
-        </button>
+<div class="modal" id="documentationModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">AURA Language Documentation</div>
+      <button class="modal-close" onclick="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="doc-section">
+        <div class="doc-title">Variables & Assignment</div>
+        <div class="doc-content">
+          Declare and assign variables:
+          <div class="code-snippet">aura name = "Alex"
+aura score = 100
+gyatt bonus = 42</div>
+        </div>
       </div>
-      <div class="modal-body" id="modalBody">
-        <div class="doc-section">
-          <div class="doc-title">Variables & Assignment</div>
-          <div class="doc-content">
-            Declare and assign variables using the aura keyword:
-            <div class="code-snippet">aura name = "value"
-aura number = 42
-gyatt alternative = "syntax"</div>
-          </div>
-        </div>
 
-        <div class="doc-section">
-          <div class="doc-title">Output Commands</div>
-          <div class="doc-content">
-            Display values using various output commands:
-            <div class="code-snippet">slay value      # Output with [SLAY] prefix
-vibes value     # Output with [VIBES] prefix
-periodt value   # Output with [PERIODT] prefix</div>
-          </div>
+      <div class="doc-section">
+        <div class="doc-title">Output Commands</div>
+        <div class="doc-content">
+          Print values or variables:
+          <div class="code-snippet">vibes "Hello, world!"
+periodt score
+rizz name</div>
         </div>
+      </div>
 
-        <div class="doc-section">
-          <div class="doc-title">Control Structures</div>
-          <div class="doc-content">
-            Loops and conditionals for program flow:
-            <div class="code-snippet">loop count
+      <div class="doc-section">
+        <div class="doc-title">Mathematical Operations</div>
+        <div class="doc-content">
+          Perform calculations:
+          <div class="code-snippet">slay a b      # Addition (a + b)
+cap a b       # Subtraction (a - b)
+drip a b      # Multiplication (a * b)
+sus a b       # Division (a / b)
+mod a b       # Modulo (a % b)
+power a b     # Exponentiation (a ** b)
+sqrt x        # Square root
+random min max # Random integer between min and max</div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <div class="doc-title">Control Structures</div>
+        <div class="doc-content">
+          Loops and conditionals:
+          <div class="code-snippet">loop n
   # Loop body (use loopindex for counter)
 endloop
 
@@ -675,66 +678,52 @@ betif condition
   # If body
 nobet
 
-whileloop condition
-  # While body
-endwhileloop</div>
-          </div>
+susif condition
+  # Else-if body
+nosus
+</div>
         </div>
+      </div>
 
-        <div class="doc-section">
-          <div class="doc-title">Functions</div>
-          <div class="doc-content">
-            Define and call custom functions:
-            <div class="code-snippet">bet function_name(param1, param2)
-  # Function body
-  return value
+      <div class="doc-section">
+        <div class="doc-title">Functions</div>
+        <div class="doc-content">
+          Define and call custom functions:
+          <div class="code-snippet">bet greet(name)
+  periodt "Hello,"
+  vibes name
 no-cap
 
-bet function_name(arguments)</div>
-          </div>
+bet greet("AURA User")</div>
         </div>
+      </div>
 
-        <div class="doc-section">
-          <div class="doc-title">Arrays (Squad)</div>
-          <div class="doc-content">
-            Work with arrays using squad operations:
-            <div class="code-snippet">squad arr = [1, 2, 3, 4]
-squadget arr 0        # Get element
-squadset arr 0 value  # Set element
-squadpush arr value   # Add element
-squadpop arr          # Remove element</div>
-          </div>
+      <div class="doc-section">
+        <div class="doc-title">Variable Operations</div>
+        <div class="doc-content">
+          Modify and manage variables:
+          <div class="code-snippet">rizzup var        # Increment variable
+gyattdown var      # Decrement variable
+ghost var          # Delete variable
+maincharacter var  # Protect variable from deletion
+vibecheck          # Show all variables</div>
         </div>
+      </div>
 
-        <div class="doc-section">
-          <div class="doc-title">Mathematical Operations</div>
-          <div class="doc-content">
-            Perform calculations with AURA syntax:
-            <div class="code-snippet">slay a b      # Addition (a + b)
-cap a b       # Subtraction (a - b)
-drip a b      # Multiplication (a * b)
-sus a b       # Division (a / b)
-sqrt number   # Square root
-random min max # Random number</div>
-          </div>
-        </div>
-
-        <div class="doc-section">
-          <div class="doc-title">Utility Commands</div>
-          <div class="doc-content">
-            Additional helpful commands:
-            <div class="code-snippet">help                    # Show help
-vibecheck              # Show all variables
-exit                   # End program
-maincharacter var      # Protect variable
-ghost var              # Delete variable
-rizzup var             # Increment
-gyattdown var          # Decrement</div>
-          </div>
+      <div class="doc-section">
+        <div class="doc-title">Special & Utility Commands</div>
+        <div class="doc-content">
+          Other helpful commands:
+          <div class="code-snippet">compliment        # Random compliment
+motivation         # Motivational quote
+aesthetic          # Aesthetic message
+help               # Show help
+exit               # Quit program</div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
   <script>
     const editor = document.getElementById('codeEditor');
