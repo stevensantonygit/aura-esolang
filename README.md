@@ -77,7 +77,6 @@ python aura.py --version
 ```aura
 vibes "Hello World!"
 periodt "Welcome to AURA!"
-# Clone or download the project
 exit
 ```
 ### Math Operations
