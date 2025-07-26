@@ -1,6 +1,29 @@
-aura x = 10
-aura y = 11
-vibes slay x y
-vibes drip x y
-vibes sus x y
-vibes cap x y
+aura a = 15
+aura b = 4
+
+vibes "Addition:"
+vibes slay a b      # 15 + 4 = 19
+
+vibes "Subtraction:"
+vibes cap a b       # 15 - 4 = 11
+
+vibes "Multiplication:"
+vibes drip a b      # 15 * 4 = 60
+
+vibes "Division:"
+vibes sus a b       # 15 / 4 = 3.75
+
+vibes "Modulo:"
+vibes mod a b       # 15 % 4 = 3
+
+vibes "Exponentiation:"
+vibes power a b     # 15 ** 4 = 50625
+
+vibes "Square root:"
+vibes sqrt a        # sqrt(15)
+
+vibes "Absolute value:"
+vibes abs -15       # 15
+
+vibes "Random number between a and b:"
+vibes random a b    # random integer between 4 and 15

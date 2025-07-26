@@ -118,7 +118,16 @@ class AuraInterpreter:
         elif tokens[0] == 'log':
             return math.log(self.get_value(tokens[1]))
         elif tokens[0] == 'random':
-            return random.randint(self.get_value(tokens[1]), self.get_value(tokens[2]))
+            a = self.get_value(tokens[1])
+            b = self.get_value(tokens[2])
+            try:
+                a = int(a)
+                b = int(b)
+            except Exception:
+                self.skill_issue("random arguments must be integers")
+            if a > b:
+                a, b = b, a
+            return random.randint(a, b)
         elif tokens[0] == 'min':
             return min(self.get_value(tokens[1]), self.get_value(tokens[2]))
         elif tokens[0] == 'max':
