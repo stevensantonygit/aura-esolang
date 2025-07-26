@@ -159,9 +159,18 @@ bet greet("Alice", 25)
 exit
 ```
 
-### Complete Example
+### Loops
 ```aura
-# Complete AURA program demonstration
+periodt "Countdown:"
+loop 5
+  aura remaining = cap 5 loopindex
+  rizz remaining
+endloop
+```
+
+### Example
+```aura
+# AURA program demonstration
 vibes "Welcome to AURA Programming Language"
 
 aura username = "CodeMaster"
@@ -185,12 +194,6 @@ bet displayStats(user, points)
 no-cap
 
 bet displayStats(username, score)
-
-periodt "Countdown:"
-loop 5
-  aura remaining = cap 5 loopindex
-  rizz remaining
-endloop
 
 periodt "Program completed successfully!"
 exit

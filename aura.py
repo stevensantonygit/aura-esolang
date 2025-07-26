@@ -264,17 +264,9 @@ class AuraInterpreter:
         self.execution_start_time = time.time()
         self.parse(code)
         print("AURA interpreter starting...")
-        for line in self.lines:
-            tokens = line.split()
-            if tokens and tokens[0] == 'squad' and len(tokens) > 2 and tokens[2] == '=':
-                self.exec_line(line)
         self.line_num = 0
         while self.line_num < len(self.lines):
             line = self.lines[self.line_num]
-            tokens = line.split()
-            if tokens and tokens[0] == 'squad' and len(tokens) > 2 and tokens[2] == '=':
-                self.line_num += 1
-                continue
             self.log_execution(line)
             result = self.exec_line(line)
             if result == 'skip_increment':
@@ -299,10 +291,25 @@ class AuraInterpreter:
             self.vars[var] = self.eval_expr(expr)
             return
         if cmd == 'bet':
-            name = line.split('(',1)[0].split()[1]
-            if name in self.functions and '(' in line and ')' in line:
+            if '(' in line and ')' in line and (self.line_num + 1 < len(self.lines)) and self.lines[self.line_num + 1] != 'no-cap':
+                name = line.split('(',1)[0].split()[1]
+                params_str = line[line.index('(')+1:line.index(')')]
+                params = [p.strip() for p in params_str.split(',') if p.strip()]
+                body = []
+                self.line_num += 1
+                while self.line_num < len(self.lines) and self.lines[self.line_num] != 'no-cap':
+                    body.append(self.lines[self.line_num])
+                    self.line_num += 1
+                self.functions[name] = (params, body)
+                if self.line_num < len(self.lines) and self.lines[self.line_num] == 'no-cap':
+                    self.line_num += 1
+                return 'skip_increment'
+            elif '(' in line and ')' in line:
+                name = line.split('(',1)[0].split()[1]
                 args_str = line[line.index('(')+1:line.index(')')]
                 args = [a.strip() for a in args_str.split(',') if a.strip()]
+                if name not in self.functions:
+                    self.skill_issue(f'no such function: {name}')
                 params, body = self.functions[name]
                 if len(params) != len(args):
                     self.skill_issue('argument count mismatch')
@@ -318,44 +325,6 @@ class AuraInterpreter:
                     self.exec_line(bline)
                 self.vars = old_vars
                 return
-            is_def = False
-            if self.line_num + 1 < len(self.lines):
-                next_line = self.lines[self.line_num + 1]
-                if not (next_line.startswith('bet') and '(' in next_line and ')' in next_line):
-                    is_def = True
-            if is_def:
-                params_str = line[line.index('(')+1:line.index(')')]
-                params = [p.strip() for p in params_str.split(',') if p.strip()]
-                body = []
-                self.line_num += 1
-                while self.line_num < len(self.lines) and self.lines[self.line_num] != 'no-cap':
-                    body.append(self.lines[self.line_num])
-                    self.line_num += 1
-                self.functions[name] = (params, body)
-                if self.line_num < len(self.lines) and self.lines[self.line_num] == 'no-cap':
-                    self.line_num += 1
-                return 'skip_increment'
-                name = line.split('(',1)[0].split()[1]
-                args_str = line[line.index('(')+1:line.index(')')]
-                args = [a.strip() for a in args_str.split(',') if a.strip()]
-                print(f"DEBUG: calling function '{name}' with args {args}")
-                if name not in self.functions:
-                    self.skill_issue(f'no such function: {name}')
-                params, body = self.functions[name]
-                if len(params) != len(args):
-                    self.skill_issue('argument count mismatch')
-                old_vars = self.vars.copy()
-                for p, a in zip(params, args):
-                    if a.startswith('"') and a.endswith('"'):
-                        self.vars[p] = a[1:-1]
-                    elif a.replace('.', '', 1).isdigit() or (a.startswith('-') and a[1:].replace('.', '', 1).isdigit()):
-                        self.vars[p] = float(a) if '.' in a else int(a)
-                    else:
-                        self.vars[p] = self.get_value(a)
-                for bline in body:
-                    print(f"DEBUG: executing in function '{name}': {bline}")
-                    self.exec_line(bline)
-                self.vars = old_vars
         elif cmd == 'ghost':
             name = tokens[1]
             if self.main_character == name:
@@ -486,7 +455,6 @@ class AuraInterpreter:
             else:
                 output_parts = []
                 for arg in tokens[1:]:
-                    # Always output the value of a variable if it exists
                     if arg in self.vars:
                         output_parts.append(str(self.vars[arg]))
                     elif arg.startswith('"') and arg.endswith('"'):

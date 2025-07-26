@@ -1,0 +1,33 @@
+# Complete AURA program demonstration
+vibes "Welcome to AURA Programming Language"
+
+aura username = "CodeMaster"
+aura score = 0
+maincharacter username
+
+aura points = random 50 100
+aura bonus = drip points 2
+gyatt score = slay score points bonus
+
+betif bigger score 200
+  periodt "High score achieved!"
+  compliment
+nobet
+
+bet displayStats(user, points)
+  periodt "Player Stats:"
+  rizz username
+  rizz points
+  aesthetic
+no-cap
+
+bet displayStats(username, score)
+
+periodt "Countdown:"
+loop 5
+  aura remaining = cap 5 loopindex
+  rizz remaining
+endloop
+
+periodt "Program completed successfully!"
+exit
