@@ -108,8 +108,8 @@ vibes sqrt a        # sqrt(15)
 vibes "Absolute value:"
 vibes abs -15       # 15
 
-vibes "Random number between a and b:"
-vibes random a b    # random integer between 4 and
+vibes "Random number between a and b :"
+vibes random a b    # random integer between 4 and 15
 ```
 
 ### Functions
@@ -179,7 +179,7 @@ nobet
 
 bet displayStats(user, points)
   periodt "Player Stats:"
-  rizz user
+  rizz username
   rizz points
   aesthetic
 no-cap
