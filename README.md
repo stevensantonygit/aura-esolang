@@ -82,15 +82,35 @@ exit
 ```
 ### Math Operations
 ```aura
-aura x = 10
-cd aura-esolang
+aura a = 15
+aura b = 4
 
-# Install dependencies (optional, for web editor)
-pip install flask
+vibes "Addition:"
+vibes slay a b      # 15 + 4 = 19
 
-# Verify installation
+vibes "Subtraction:"
+vibes cap a b       # 15 - 4 = 11
 
-vibecheck
+vibes "Multiplication:"
+vibes drip a b      # 15 * 4 = 60
+
+vibes "Division:"
+vibes sus a b       # 15 / 4 = 3.75
+
+vibes "Modulo:"
+vibes mod a b       # 15 % 4 = 3
+
+vibes "Exponentiation:"
+vibes power a b     # 15 ** 4 = 50625
+
+vibes "Square root:"
+vibes sqrt a        # sqrt(15)
+
+vibes "Absolute value:"
+vibes abs -15       # 15
+
+vibes "Random number between a and b:"
+vibes random a b    # random integer between 4 and
 ```
 
 ### Functions
@@ -114,12 +134,30 @@ exit
 ```
 
 ```aura
-# Complete AURA program demonstration
-vibes "Welcome to AURA Programming Language"
+aura age = 18
+aura name = "Alex"
 
-# Variable declarations
-aura username = "CodeMaster"
-aura score = 0
+vibes "Age verification:"
+betif bigflex age 18
+  periodt "Access granted!"
+nobet
+
+susif smaller age 13
+  periodt "Too young for this content"
+nosus
+
+vibecheck
+exit
+```
+
+```aura
+bet greet(name, age)
+  vibes "Hello!"
+  vibes name
+  vibes age
+no-cap
+bet greet("Alice", 25)
+exit
 ```
 
 ### Complete Example
@@ -127,35 +165,36 @@ aura score = 0
 # Complete AURA program demonstration
 vibes "Welcome to AURA Programming Language"
 
+aura username = "CodeMaster"
+aura score = 0
 maincharacter username
-
-# Mathematical operations
 
 aura points = random 50 100
 aura bonus = drip points 2
 gyatt score = slay score points bonus
 
-
-# Conditional logic
 betif bigger score 200
   periodt "High score achieved!"
-
   compliment
 nobet
 
-# Function definition
 bet displayStats(user, points)
   periodt "Player Stats:"
-
   rizz user
-
   rizz points
   aesthetic
 no-cap
 
-# Function call
-
 bet displayStats(username, score)
+
+periodt "Countdown:"
+loop 5
+  aura remaining = cap 5 loopindex
+  rizz remaining
+endloop
+
+periodt "Program completed successfully!"
+exit
 
 ```
 
